@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/16 03:41:18 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/16 03:55:12 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -145,7 +145,7 @@ re:				fclean all
 
 .PHONY:			norm
 norm:
-				@norminette $(SRCS) $(INCS) | grep -v 'OK'; norminette -v
+				@norminette $(SRCS) $(INCS_DIR) | grep -v 'OK'; norminette -v
 
 .PHONY:			format_norm
 format_norm:
