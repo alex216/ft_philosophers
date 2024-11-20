@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/16 03:55:12 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/20 10:09:08 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,14 +54,16 @@ INCS_DIR		:=	$(INCS_DIR)/					\
 					$(SRCS_DIR)/init/				\
 					$(SRCS_DIR)/simulation/			\
 					$(SRCS_DIR)/mutexes/			\
+					$(SRCS_DIR)/channel/			\
 					$(SRCS_DIR)/time/				\
-					$(SRCS_DIR)/utils/
+					$(SRCS_DIR)/utils/				\
 
 INCLUDES		:= $(addprefix -I,$(INCS_DIR))
 
 SRCS 			:=	$(SRCS_DIR)/main.c							\
 					$(SRCS_DIR)/libftsubset/ft_strlen.c			\
 					$(SRCS_DIR)/libftsubset/ft_atoi.c			\
+					$(SRCS_DIR)/libftsubset/ft_memcpy.c			\
 					$(SRCS_DIR)/validate_args/validate_args.c	\
 					$(SRCS_DIR)/init/init.c						\
 					$(SRCS_DIR)/simulation/simulation.c			\
@@ -71,6 +73,7 @@ SRCS 			:=	$(SRCS_DIR)/main.c							\
 					$(SRCS_DIR)/mutexes/destroy.c				\
 					$(SRCS_DIR)/mutexes/eam.c					\
 					$(SRCS_DIR)/mutexes/unsafe_function.c		\
+					$(SRCS_DIR)/channel/channel.c				\
 					$(SRCS_DIR)/time/time.c						\
 				
 
