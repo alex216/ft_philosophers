@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 22:48:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/16 03:40:33 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/21 20:44:26 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,16 @@ void	*unsafe_increment(void *void_ptr)
 void	*unsafe_eat(void *void_ptr)
 {
 	t_philo	*philo;
+	size_t	eat_count;
+	size_t	id;
 
 	philo = (t_philo *)void_ptr;
+	id = philo->id;
 	unsafe_printf(philo, EATING, 0);
 	precise_msleep(philo->e->config.time_to_eat);
-	safe_execute(unsafe_increment,
-		&philo->e->mutexes.eat_count[philo->id].lock,
-		&philo->e->mutexes.eat_count[philo->id].count);
+	receive_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
+	eat_count++;
+	send_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
 	return (NULL);
 }
 

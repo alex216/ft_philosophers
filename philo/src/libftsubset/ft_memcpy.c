@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   destroy.c                                          :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 14:26:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/20 10:25:27 by yliu             ###   ########.fr       */
+/*   Created: 2024/11/20 08:57:28 by yliu              #+#    #+#             */
+/*   Updated: 2024/11/22 16:23:50 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mutexes.h"
+#include "libftsubset.h"
 
-void	destroy_mutexes(t_env *e)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	size_t			i;
-	const size_t	num_of_philo = e->config.num_philo;
+	unsigned char		*d;
+	const unsigned char	*s;
 
-	i = 0;
-	while (i < num_of_philo)
+	if (dst == NULL || src == NULL)
+		return (NULL);
+	s = src;
+	d = dst;
+	while (n)
 	{
-		pthread_mutex_destroy(&e->mutexes.fork[i].lock);
-		i++;
+		*d++ = *s++;
+		n--;
 	}
+	return (dst);
 }

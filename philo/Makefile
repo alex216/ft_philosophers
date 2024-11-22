@@ -6,22 +6,17 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/16 03:41:18 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/22 16:24:40 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME			:= philo
-WARNING			:= -Wall -Wextra -Werror
+WARNING			:= -Wall -Wextra -Werror -pedantic
 RM				:= rm -rf
 ECHO			:= printf
 MMD_MP			:= -MMD -MP
-SANITIZE		:= -g -fsanitize=integer,undefined $(THREAD)
-THREAD			+= thread
+SANITIZE		:= -g -fsanitize=integer,undefined,thread
 CFLAGS			:= $(WARNING) $(SANITIZE)
-
-ifeq ($(WITH_DEBUG),1)
-    CFLAGS += -DDEBUG
-endif
 
 # color and line
 DEF_COLOR		:=	\033[0;39m
@@ -48,29 +43,33 @@ INCS_DIR		:= ./inc
 
 ##########################################
 # base files
-INCS_DIR		:=	$(INCS_DIR)/					\
-					$(SRCS_DIR)/libftsubset/		\
-					$(SRCS_DIR)/validate_args/		\
-					$(SRCS_DIR)/init/				\
-					$(SRCS_DIR)/simulation/			\
-					$(SRCS_DIR)/mutexes/			\
-					$(SRCS_DIR)/time/				\
-					$(SRCS_DIR)/utils/
+INCS_DIR		:=	$(INCS_DIR)/								\
+					$(SRCS_DIR)/libftsubset/libftsubset.h		\
+					$(SRCS_DIR)/validate_args/validate_args.h	\
+					$(SRCS_DIR)/init/init.h						\
+					$(SRCS_DIR)/simulation/simulation.h			\
+					$(SRCS_DIR)/mutexes/mutexes.h				\
+					$(SRCS_DIR)/channel/channel.h				\
+					$(SRCS_DIR)/time/time.h						\
+					$(SRCS_DIR)/utils/utils.h					\
 
-INCLUDES		:= $(addprefix -I,$(INCS_DIR))
+INCLUDES		:= $(addprefix -I,$(dir $(INCS_DIR)))
 
 SRCS 			:=	$(SRCS_DIR)/main.c							\
 					$(SRCS_DIR)/libftsubset/ft_strlen.c			\
 					$(SRCS_DIR)/libftsubset/ft_atoi.c			\
+					$(SRCS_DIR)/libftsubset/ft_memcpy.c			\
 					$(SRCS_DIR)/validate_args/validate_args.c	\
 					$(SRCS_DIR)/init/init.c						\
 					$(SRCS_DIR)/simulation/simulation.c			\
 					$(SRCS_DIR)/simulation/philosopher.c		\
+					$(SRCS_DIR)/simulation/manager.c			\
 					$(SRCS_DIR)/simulation/eat.c				\
 					$(SRCS_DIR)/mutexes/init.c					\
 					$(SRCS_DIR)/mutexes/destroy.c				\
 					$(SRCS_DIR)/mutexes/eam.c					\
 					$(SRCS_DIR)/mutexes/unsafe_function.c		\
+					$(SRCS_DIR)/channel/channel.c				\
 					$(SRCS_DIR)/time/time.c						\
 				
 
@@ -84,7 +83,7 @@ DEP				:= $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.d))
 all:			$(NAME)
 
 $(NAME):		$(SRCS) Makefile
-				@make -s step_0
+				@make  -s step_0
 
 .PHONY:			debug
 debug:		    
@@ -92,7 +91,7 @@ debug:
 
 .PHONY:			step_0
 step_0:
-				@make -s step_1
+				@make  -s step_1
 
 .PHONY:			step_1
 step_1:
@@ -102,15 +101,15 @@ step_1:
 
 .PHONY:			step_2
 step_2:			$(OBJS)
-				$(CC) $(CFLAGS) $^ -o $(NAME)
+				@$(CC) $(CFLAGS) $^ -o $(NAME)
 				@$(ECHO) "\r\e$(GREEN)$(LINE)$(DEF_COLOR)"
 				@$(ECHO) "$(GREEN) ‣ 100%% $(DEF_COLOR)\n"
 				@$(ECHO) "$(DEF_COLOR)$(BLUE)[$(NAME)]\t./$(NAME) \t$(GREEN)compiled ✓$(DEF_COLOR)\n"
 
-$(OBJS_DIR)/%.o:$(SRCS_DIR)/%.c
+$(OBJS_DIR)/%.o:$(SRCS_DIR)/%.c $(INCS_DIR)
 				@mkdir -p $(@D)
 				@$(CC) $(CFLAGS) $(MMD_MP) $(INCLUDES) -c $< -o $@
-				make -s output_diff
+				@make -s output_diff
 
 ITER			= 0
 DIFF			= 0
@@ -145,7 +144,7 @@ re:				fclean all
 
 .PHONY:			norm
 norm:
-				@norminette $(SRCS) $(INCS) | grep -v 'OK'; norminette -v
+				@norminette $(SRCS) $(INCS_DIR) | grep -v 'OK'; norminette -v
 
 .PHONY:			format_norm
 format_norm:
@@ -154,7 +153,7 @@ format_norm:
 
 .PHONEY:		test
 test:			all
-				@./$(NAME) 2 200 200 200 10
+				@./$(NAME) 2 200 200 200 5
 
 .PHONEY:		test1
 test1:			all
@@ -167,5 +166,5 @@ test2:			all
 .PHONEY:
 testx:			all
 				make test
-				make test1
+				-make test1
 				make test2
