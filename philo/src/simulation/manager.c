@@ -6,12 +6,14 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/21 21:58:49 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/22 23:56:33 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include "simulation.h"
+
+#define INTERVAL 1000
 
 static bool	_is_philo_dead(t_philo *philo)
 {
@@ -59,7 +61,7 @@ void	*manager(void *void_ptr)
 		}
 		if (!some_one_is_alive)
 			break ;
-		usleep(1000);
+		usleep(INTERVAL);
 	}
 	return (NULL);
 }
