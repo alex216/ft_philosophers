@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:29:12 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/20 09:56:32 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/20 21:37:59 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_channel	*construct_channel(size_t data_size)
 		free(channel);
 		return (NULL);
 	}
-	memset(&channel->data, 0, sizeof(data_size));
+	memset(channel->data, 0, data_size);
 	channel->data_size = data_size;
 	pthread_mutex_init(&channel->lock, NULL);
 	return (channel);

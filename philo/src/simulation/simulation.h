@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:01:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/15 20:50:14 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/16 04:02:37 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 t_result	start_simulation(t_env *e);
 t_result	wait_simulation_end(t_env *e);
 
+void 		*manager(void *void_ptr);
 void		*philosopher(void *void_ptr);
 void		eat(t_philo *philo);
 

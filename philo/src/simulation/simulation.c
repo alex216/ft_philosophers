@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:06 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/15 20:24:12 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/16 04:46:27 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,11 @@ static t_result	_create_threads(t_env *e)
 			return (FAILURE);
 		i++;
 	}
+	if (pthread_create(&e->manager.thread,
+			NULL,
+			manager,
+			&e->manager) != 0)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -42,6 +47,7 @@ static t_result	_join_threads(t_env *e)
 			return (FAILURE);
 		i++;
 	}
+	pthread_join(e->manager.thread, NULL);
 	return (SUCCESS);
 }
 

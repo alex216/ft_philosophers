@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:04:56 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/13 17:01:20 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/21 20:42:04 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_result	validate_args(t_env *e, int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 		return (FAILURE);
+	memset(e, 0, sizeof(t_env));
 	config = &e->config;
 	*(size_t *)&config->num_philo = ft_atoi(argv[1]);
 	if (errno != 0 || config->num_philo > MAX_PHILO || config->num_philo < 2)
