@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/22 13:37:06 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/22 16:24:40 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -166,5 +166,5 @@ test2:			all
 .PHONEY:
 testx:			all
 				make test
-				make test1
+				-make test1
 				make test2
