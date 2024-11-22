@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/21 21:30:56 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/22 23:46:49 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,21 @@ static void	_think(t_philo *philo)
 	unsafe_printf(philo, THINKING, 0);
 }
 
-void	*philosopher(void *void_ptr)
+static void	_set_start_time(t_philo *philo)
 {
-	t_philo		*philo;
-	size_t		id;
-	t_timeval	now;
+	t_timeval		now;
+	const size_t	id = philo->id;
 
-	philo = void_ptr;
-	id = philo->id;
 	gettimeofday(&now, NULL);
 	send_channel(philo->e->mutexes.last_meal[id - 1], &now);
+}
+
+void	*philosopher(void *void_ptr)
+{
+	t_philo	*philo;
+
+	philo = void_ptr;
+	_set_start_time(philo);
 	while (true)
 	{
 		eat(philo);
