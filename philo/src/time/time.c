@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:55:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/14 12:56:01 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 00:36:29 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 #define USEC_IN_MSEC 1000
 #define USEC_IN_SEC 1000000
 
-int	difftimeval_ms(struct timeval t1, struct timeval t2)
+long	difftimeval_ms(struct timeval t1, struct timeval t2)
 {
-	int	diff;
+	long	diff;
 
-	diff = (suseconds_t)(t2.tv_sec - t1.tv_sec) * MSEC_IN_SEC;
+	diff = (t2.tv_sec - t1.tv_sec) * MSEC_IN_SEC;
 	diff += (t2.tv_usec - t1.tv_usec) / USEC_IN_MSEC;
 	return (diff);
 }

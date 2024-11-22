@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 22:48:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/22 17:19:02 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 00:34:38 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,22 @@ void	*unsafe_eat(void *void_ptr)
 
 void	*unsafe_printf(t_philo *philo, int STATE, size_t idx)
 {
+	t_timeval	now;
+	int			diff_time;
+
 	(void)idx;
+	gettimeofday(&now, NULL);
+	diff_time = difftimeval_ms(philo->start_at, now);
 	if (STATE == HAS_FORK)
-		printf("%zu has taken a fork\n", philo->id);
+		printf("%d %zu has taken a fork\n", diff_time, philo->id);
 	else if (STATE == EATING)
-		printf("%zu is eating\n", philo->id);
+		printf("%d %zu is eating\n", diff_time, philo->id);
 	else if (STATE == SLEEPING)
-		printf("%zu is sleeping\n", philo->id);
+		printf("%d %zu is sleeping\n", diff_time, philo->id);
 	else if (STATE == THINKING)
-		printf("%zu is thinking\n", philo->id);
+		printf("%d %zu is thinking\n", diff_time, philo->id);
 	else if (STATE == DIED)
-		printf("%zu died\n", philo->id);
+		printf("%d %zu died\n", diff_time, philo->id);
 	else
 		printf("unknown state\n");
 	return (NULL);
