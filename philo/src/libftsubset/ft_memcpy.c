@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 08:57:28 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/20 17:35:08 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/22 16:23:50 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	void	*tmp;
+	unsigned char		*d;
+	const unsigned char	*s;
 
 	if (dst == NULL || src == NULL)
 		return (NULL);
-	tmp = dst;
+	s = src;
+	d = dst;
 	while (n)
 	{
-		*(char *)tmp++ = *(char *)src++;
+		*d++ = *s++;
 		n--;
 	}
 	return (dst);
