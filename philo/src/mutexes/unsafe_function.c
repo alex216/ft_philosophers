@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 22:48:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/21 20:44:26 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/22 17:19:02 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ void	*unsafe_eat(void *void_ptr)
 
 void	*unsafe_printf(t_philo *philo, int STATE, size_t idx)
 {
+	(void)idx;
 	if (STATE == HAS_FORK)
-		printf("philo %zu has taken a fork %zu\n", philo->id, idx);
+		printf("%zu has taken a fork\n", philo->id);
 	else if (STATE == EATING)
-		printf("philo %zu is eating\n", philo->id);
+		printf("%zu is eating\n", philo->id);
 	else if (STATE == SLEEPING)
-		printf("philo %zu is sleeping\n", philo->id);
+		printf("%zu is sleeping\n", philo->id);
 	else if (STATE == THINKING)
-		printf("philo %zu is thinking\n", philo->id);
+		printf("%zu is thinking\n", philo->id);
 	else if (STATE == DIED)
-		printf("philo %zu died\n", philo->id);
+		printf("%zu died\n", philo->id);
 	else
 		printf("unknown state\n");
 	return (NULL);
