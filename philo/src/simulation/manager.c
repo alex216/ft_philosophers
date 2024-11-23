@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 14:14:11 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 14:44:32 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,18 @@
 #include "simulation.h"
 
 #define INTERVAL 1000
+
+bool	safe_is_philo_dead(t_philo *philo)
+{
+	const size_t	id = philo->id;
+	const size_t	time_to_die = philo->e->config.time_to_die;
+	t_timeval		last_meal;
+	t_timeval		now;
+
+	receive_channel(philo->e->mutexes.last_meal[id - 1], &last_meal);
+	gettimeofday(&now, NULL);
+	return (difftimeval_ms(last_meal, now) >= (int)time_to_die);
+}
 
 void	*manager(void *void_ptr)
 {
