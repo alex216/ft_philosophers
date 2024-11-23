@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:06 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/16 04:46:27 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 16:12:34 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,12 @@ static t_result	_create_threads(t_env *e)
 	i = 0;
 	while (i < num_philo)
 	{
-		if (pthread_create(&e->philo[i].thread,
-				NULL,
-				&philosopher,
+		if (pthread_create(&e->philo[i].thread, NULL, &philosopher,
 				&e->philo[i]) != 0)
 			return (FAILURE);
 		i++;
 	}
-	if (pthread_create(&e->manager.thread,
-			NULL,
-			manager,
-			&e->manager) != 0)
+	if (pthread_create(&e->manager.thread, NULL, manager, &e->manager) != 0)
 		return (FAILURE);
 	return (SUCCESS);
 }

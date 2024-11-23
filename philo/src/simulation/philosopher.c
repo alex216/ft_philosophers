@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 15:02:27 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 16:19:22 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	*philosopher(void *void_ptr)
 
 	philo = void_ptr;
 	gettimeofday(&philo->start_at, NULL);
+	safe_update_last_meal(philo, &philo->start_at);
 	while (true)
 	{
 		if (eat(philo) == FAILURE)

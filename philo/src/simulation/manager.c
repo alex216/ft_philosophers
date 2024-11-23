@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 15:30:17 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 16:20:05 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,31 @@ void	*manager(void *void_ptr)
 	t_manager	*manager;
 	size_t		i;
 	size_t		num_philo;
+	size_t		satisfied_philo;
+	bool		false_bool;
 
+	false_bool = false;
 	manager = (t_manager *)void_ptr;
 	num_philo = manager->e->config.num_philo;
+	usleep(INTERVAL);
 	while (safe_is_game_running(manager->e))
 	{
 		i = 0;
+		satisfied_philo = 0;
 		while (i < num_philo)
 		{
 			if (safe_is_philo_satisfied(&manager->e->philo[i]))
-				;
+				satisfied_philo++;
 			else if (safe_is_philo_dead(&manager->e->philo[i]))
 			{
-				send_channel(manager->e->mutexes.is_running, false);
+				print_msg(&manager->e->philo[i], DIED);
+				send_channel(manager->e->mutexes.is_running, &false_bool);
 				break ;
 			}
 			i++;
 		}
+		if (satisfied_philo == num_philo)
+			send_channel(manager->e->mutexes.is_running, &false_bool);
 		usleep(INTERVAL);
 	}
 	return (NULL);
