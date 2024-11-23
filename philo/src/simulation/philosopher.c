@@ -6,22 +6,23 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 13:18:28 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 13:36:16 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 
-static void	_sleep(t_philo *philo)
+static t_result	_sleep(t_philo *philo)
 {
-	unsafe_printf(philo, SLEEPING, 0);
+	if (unsafe_printf(philo, SLEEPING) == FAILURE)
+		return (FAILURE);
 	precise_msleep(philo->e->config.time_to_sleep);
+	return (SUCCESS);
 }
 
-static void	_think(t_philo *philo)
+static t_result	_think(t_philo *philo)
 {
-	(void)philo;
-	unsafe_printf(philo, THINKING, 0);
+	return (unsafe_printf(philo, THINKING));
 }
 
 void	*philosopher(void *void_ptr)
@@ -32,11 +33,14 @@ void	*philosopher(void *void_ptr)
 	gettimeofday(&philo->start_at, NULL);
 	while (true)
 	{
-		eat(philo);
+		if (eat(philo) == FAILURE)
+			break ;
 		if (safe_is_philo_satisfied(philo))
 			break ;
-		_sleep(philo);
-		_think(philo);
+		if (_sleep(philo) == FAILURE)
+			break ;
+		if (_think(philo) == FAILURE)
+			break ;
 	}
 	return (NULL);
 }

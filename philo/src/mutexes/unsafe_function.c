@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 22:48:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 00:34:38 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 13:34:07 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	*unsafe_increment(void *void_ptr)
 	return (NULL);
 }
 
-void	*unsafe_eat(void *void_ptr)
+t_result	unsafe_eat(void *void_ptr)
 {
 	t_philo	*philo;
 	size_t	eat_count;
@@ -38,20 +38,22 @@ void	*unsafe_eat(void *void_ptr)
 
 	philo = (t_philo *)void_ptr;
 	id = philo->id;
-	unsafe_printf(philo, EATING, 0);
+	if (unsafe_printf(philo, EATING) == FAILURE)
+		return (FAILURE);
 	precise_msleep(philo->e->config.time_to_eat);
 	receive_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
 	eat_count++;
 	send_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
-	return (NULL);
+	return (SUCCESS);
 }
 
-void	*unsafe_printf(t_philo *philo, int STATE, size_t idx)
+t_result	unsafe_printf(t_philo *philo, int STATE)
 {
 	t_timeval	now;
 	int			diff_time;
 
-	(void)idx;
+	if (!safe_is_game_running(philo->e))
+		return (FAILURE);
 	gettimeofday(&now, NULL);
 	diff_time = difftimeval_ms(philo->start_at, now);
 	if (STATE == HAS_FORK)
@@ -66,5 +68,5 @@ void	*unsafe_printf(t_philo *philo, int STATE, size_t idx)
 		printf("%d %zu died\n", diff_time, philo->id);
 	else
 		printf("unknown state\n");
-	return (NULL);
+	return (SUCCESS);
 }
