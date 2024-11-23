@@ -6,21 +6,11 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 00:23:58 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 13:18:28 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
-
-static bool	_is_philo_satisfied(t_philo *philo)
-{
-	size_t			eat_count;
-	const size_t	id = philo->id;
-	const size_t	min_eat_count = philo->e->config.minimum_eat_count;
-
-	receive_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
-	return (eat_count >= min_eat_count);
-}
 
 static void	_sleep(t_philo *philo)
 {
@@ -43,7 +33,7 @@ void	*philosopher(void *void_ptr)
 	while (true)
 	{
 		eat(philo);
-		if (_is_philo_satisfied(philo))
+		if (safe_is_philo_satisfied(philo))
 			break ;
 		_sleep(philo);
 		_think(philo);
