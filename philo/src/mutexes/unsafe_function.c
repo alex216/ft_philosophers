@@ -6,44 +6,42 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 22:48:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 13:34:07 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 14:22:20 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mutexes.h"
 
-void	*unsafe_set_time(void *param)
+static void	_safe_update_last_meal(t_philo *philo)
 {
-	t_timeval	*last_meal_timestamp;
+	t_timeval		last_meal;
+	const size_t	id = philo->id;
 
-	last_meal_timestamp = param;
-	gettimeofday(last_meal_timestamp, NULL);
-	return (NULL);
+	receive_channel(philo->e->mutexes.last_meal[id - 1], &last_meal);
+	gettimeofday(&last_meal, NULL);
+	send_channel(philo->e->mutexes.last_meal[philo->id - 1], &last_meal);
 }
 
-void	*unsafe_increment(void *void_ptr)
+static void	_safe_update_eat_count(t_philo *philo)
 {
-	size_t	*count;
+	size_t			eat_count;
+	const size_t	id = philo->id;
 
-	count = (size_t *)void_ptr;
-	(*count)++;
-	return (NULL);
+	receive_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
+	eat_count++;
+	send_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
 }
 
 t_result	unsafe_eat(void *void_ptr)
 {
 	t_philo	*philo;
-	size_t	eat_count;
-	size_t	id;
 
 	philo = (t_philo *)void_ptr;
-	id = philo->id;
 	if (unsafe_printf(philo, EATING) == FAILURE)
 		return (FAILURE);
+	_safe_update_last_meal(philo);
 	precise_msleep(philo->e->config.time_to_eat);
-	receive_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
-	eat_count++;
-	send_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
+	_safe_update_eat_count(philo);
 	return (SUCCESS);
 }
 

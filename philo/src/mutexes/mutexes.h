@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:41 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 13:35:45 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 14:19:24 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ void				safe_execute(t_unsafe_func f, pthread_mutex_t *m,
 t_result			safe_execute_with_two_mutexes(t_unsafe_func f,
 						pthread_mutex_t *m1, pthread_mutex_t *m2, void *param);
 
-void				*unsafe_set_time(void *param);
-void				*unsafe_increment(void *void_ptr);
 t_result			unsafe_eat(void *void_ptr);
 t_result			unsafe_printf(t_philo *philo, int STATE);
 
