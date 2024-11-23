@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:44:12 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 13:36:47 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 15:02:27 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_result	safe_execute_with_two_mutexes(t_unsafe_func f, pthread_mutex_t *m1,
 	t_result	result;
 
 	pthread_mutex_lock(m1);
-	unsafe_printf(param, HAS_FORK);
+	print_msg(param, HAS_FORK);
 	pthread_mutex_lock(m2);
-	unsafe_printf(param, HAS_FORK);
+	print_msg(param, HAS_FORK);
 	result = f(param);
 	pthread_mutex_unlock(m2);
 	pthread_mutex_unlock(m1);

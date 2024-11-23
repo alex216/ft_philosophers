@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/23 13:18:53 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/23 15:04:28 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,6 +72,7 @@ SRCS 			:=	$(SRCS_DIR)/main.c							\
 					$(SRCS_DIR)/mutexes/safe_function.c			\
 					$(SRCS_DIR)/channel/channel.c				\
 					$(SRCS_DIR)/time/time.c						\
+					$(SRCS_DIR)/utils/utils.c
 				
 
 # mandatory files
