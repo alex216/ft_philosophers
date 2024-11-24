@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 16:20:05 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 16:36:02 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	*manager(void *void_ptr)
 	false_bool = false;
 	manager = (t_manager *)void_ptr;
 	num_philo = manager->e->config.num_philo;
-	usleep(INTERVAL);
 	while (safe_is_game_running(manager->e))
 	{
 		i = 0;
