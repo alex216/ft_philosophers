@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:04:56 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/21 20:42:04 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/23 16:41:57 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ t_result	validate_args(t_env *e, int argc, char **argv)
 	*(size_t *)&e->config.time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 	{
-		*(int *)&e->config.minimum_eat_count = ft_atoi(argv[5]);
+		*(int *)&e->config.min_eat_count = ft_atoi(argv[5]);
 		if (errno != 0)
 			return (FAILURE);
 	}
 	else
-		*(int *)&e->config.minimum_eat_count = -1;
+		*(int *)&e->config.min_eat_count = -1;
 	return (SUCCESS);
 }
