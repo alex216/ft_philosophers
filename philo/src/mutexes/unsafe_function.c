@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 22:48:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/27 19:28:56 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/27 20:51:43 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,16 @@ t_result	unsafe_eat(void *void_ptr)
 {
 	t_philo		*philo;
 	t_timeval	tp;
+	size_t		time_to_eat;
 
 	philo = (t_philo *)void_ptr;
-	if (print_msg(philo, EATING) == FAILURE)
-		return (FAILURE);
+	time_to_eat = philo->e->config.time_to_eat;
+	print_msg(philo, EATING);
 	gettimeofday(&tp, NULL);
-	precise_msleep(philo->e->config.time_to_eat);
 	safe_update_last_meal(philo, &tp);
+	precise_msleep(time_to_eat);
+	// if (sleep_with_check(philo, time_to_eat) == FAILURE)
+	// 	return (FAILURE);
 	safe_update_eat_count(philo);
 	return (SUCCESS);
 }

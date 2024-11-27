@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 16:36:02 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/27 20:19:31 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ bool	safe_is_philo_dead(t_philo *philo)
 	return (difftimeval_ms(last_meal, now) >= (int)time_to_die);
 }
 
+// this thread will not hold more than one mutex at a time.
 void	*manager(void *void_ptr)
 {
 	t_manager	*manager;

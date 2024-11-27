@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/25 18:39:47 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/27 20:58:49 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,18 @@
 
 static t_result	_sleep(t_philo *philo)
 {
-	if (print_msg(philo, SLEEPING) == FAILURE)
-		return (FAILURE);
-	precise_msleep(philo->e->config.time_to_sleep);
-	return (SUCCESS);
+	const size_t	time_to_sleep = philo->e->config.time_to_sleep;
+
+	print_msg(philo, SLEEPING);
+	return (sleep_with_check(philo, time_to_sleep));
 }
 
-static t_result	_think(t_philo *philo)
+static void	_think(t_philo *philo)
 {
-	return (print_msg(philo, THINKING));
+	print_msg(philo, THINKING);
 }
 
-static void	_init_wait(t_philo *philo)
+static size_t	_ret_init_wait_time(t_philo *philo)
 {
 	const size_t	num_philo = philo->e->config.num_philo;
 	const size_t	id = philo->id;
@@ -38,17 +38,19 @@ static void	_init_wait(t_philo *philo)
 			p = 2 * num_philo - id;
 		else
 			p = num_philo - id;
-		precise_msleep((size_t)(p * time_to_eat / (num_philo - 1)));
+		return ((size_t)(p * time_to_eat / (num_philo - 1)));
 	}
 	else
 	{
 		if (id % 2 == 1)
-			precise_msleep(0);
+			return (0);
 		else
-			precise_msleep(time_to_eat);
+			return (time_to_eat);
 	}
 }
 
+// check if the philo has died is done,
+// after blocking action such as sleep and mutex lock
 void	*philosopher(void *void_ptr)
 {
 	t_philo	*philo;
@@ -56,9 +58,9 @@ void	*philosopher(void *void_ptr)
 	philo = void_ptr;
 	gettimeofday(&philo->start_at, NULL);
 	safe_update_last_meal(philo, &philo->start_at);
-	if (_think(philo) == FAILURE)
+	_think(philo);
+	if (sleep_with_check(philo, _ret_init_wait_time(philo)) == FAILURE)
 		return (NULL);
-	_init_wait(philo);
 	while (true)
 	{
 		if (eat(philo) == FAILURE)
@@ -67,8 +69,7 @@ void	*philosopher(void *void_ptr)
 			break ;
 		if (_sleep(philo) == FAILURE)
 			break ;
-		if (_think(philo) == FAILURE)
-			break ;
+		_think(philo);
 	}
 	return (NULL);
 }

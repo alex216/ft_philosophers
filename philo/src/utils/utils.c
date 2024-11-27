@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 15:02:38 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/27 20:47:39 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,9 @@
 
 t_result	print_msg(t_philo *philo, int STATE)
 {
-	t_timeval now;
-	int diff_time;
+	t_timeval	now;
+	int			diff_time;
 
-	if (!safe_is_game_running(philo->e))
-		return (FAILURE);
 	gettimeofday(&now, NULL);
 	diff_time = difftimeval_ms(philo->start_at, now);
 	if (STATE == HAS_FORK)
@@ -33,5 +31,13 @@ t_result	print_msg(t_philo *philo, int STATE)
 		printf("%d %zu died\n", diff_time, philo->id);
 	else
 		printf("unknown state\n");
+	return (SUCCESS);
+}
+
+t_result	sleep_with_check(t_philo *philo, size_t time_to_sleep)
+{
+	precise_msleep(time_to_sleep);
+	if (!safe_is_game_running(philo->e))
+		return (FAILURE);
 	return (SUCCESS);
 }
