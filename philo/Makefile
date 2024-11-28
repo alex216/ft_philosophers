@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/28 10:58:54 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/28 16:52:26 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,8 +69,6 @@ SRCS 			:=	$(SRCS_DIR)/main.c							\
 					$(SRCS_DIR)/simulation/eat.c				\
 					$(SRCS_DIR)/mutexes/init.c					\
 					$(SRCS_DIR)/mutexes/destroy.c				\
-					$(SRCS_DIR)/mutexes/eam.c					\
-					$(SRCS_DIR)/mutexes/unsafe_function.c		\
 					$(SRCS_DIR)/mutexes/safe_function.c			\
 					$(SRCS_DIR)/channel/channel.c				\
 					$(SRCS_DIR)/time/time.c						\
