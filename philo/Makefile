@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/11/23 15:55:28 by yliu             ###   ########.fr        #
+#    Updated: 2024/11/28 10:58:54 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,8 @@ INCLUDES		:= $(addprefix -I,$(dir $(INCS_DIR)))
 SRCS 			:=	$(SRCS_DIR)/main.c							\
 					$(SRCS_DIR)/libftsubset/ft_strlen.c			\
 					$(SRCS_DIR)/libftsubset/ft_atoi.c			\
+					$(SRCS_DIR)/libftsubset/ft_itoa.c			\
+					$(SRCS_DIR)/libftsubset/ft_strcmp.c			\
 					$(SRCS_DIR)/libftsubset/ft_memcpy.c			\
 					$(SRCS_DIR)/validate_args/validate_args.c	\
 					$(SRCS_DIR)/init/init.c						\

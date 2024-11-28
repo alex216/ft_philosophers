@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:08 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 16:41:57 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/28 11:16:19 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ struct							s_config
 	const size_t				time_to_die;
 	const size_t				time_to_eat;
 	const size_t				time_to_sleep;
-	const int					min_eat_count;
+	const size_t				min_eat_count;
 };
 
 struct							s_mutexes
