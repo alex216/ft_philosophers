@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/28 15:28:28 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/28 16:43:56 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,30 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 	}
 }
 
+static size_t	get_right_fork(t_philo *philo)
+{
+	return (philo->id - 1);
+}
+
+static size_t	get_left_fork(t_philo *philo)
+{
+	return ((philo->id) % philo->e->config.num_philo);
+}
+
+void	set_fork(t_philo *philo)
+{
+	if (philo->id == 1)
+	{
+		philo->first_fork = get_right_fork(philo);
+		philo->second_fork = get_left_fork(philo);
+	}
+	else
+	{
+		philo->first_fork = get_left_fork(philo);
+		philo->second_fork = get_right_fork(philo);
+	}
+}
+
 // check if the philo has died is done,
 // after blocking action such as sleep and mutex lock
 void	*philosopher(void *void_ptr)
@@ -57,6 +81,7 @@ void	*philosopher(void *void_ptr)
 
 	philo = void_ptr;
 	gettimeofday(&philo->start_at, NULL);
+	set_fork(philo);
 	safe_update_last_meal(philo, &philo->start_at);
 	_think(philo);
 	if (sleep_with_check(philo, _ret_init_wait_time(philo)) == FAILURE)
