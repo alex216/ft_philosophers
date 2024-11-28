@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/27 20:19:31 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/27 21:21:35 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ void	*manager(void *void_ptr)
 				satisfied_philo++;
 			else if (safe_is_philo_dead(&manager->e->philo[i]))
 			{
-				print_msg(&manager->e->philo[i], DIED);
 				send_channel(manager->e->mutexes.is_running, &false_bool);
-				break ;
+				print_msg(&manager->e->philo[i], DIED);
+				return (NULL);
 			}
 			i++;
 		}
