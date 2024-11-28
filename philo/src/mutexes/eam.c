@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:44:12 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/27 20:56:24 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/28 13:19:34 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,5 @@ t_result	safe_execute_with_two_mutexes(t_unsafe_func f, pthread_mutex_t *m1,
 		pthread_mutex_unlock(m2);
 	}
 	pthread_mutex_unlock(m1);
-	if (result == FAILURE)
-		exit(42);
 	return (result);
 }
