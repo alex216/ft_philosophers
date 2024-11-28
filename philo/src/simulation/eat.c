@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:48:31 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 13:35:59 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/28 15:21:59 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_result	eat(t_philo *philo)
 	size_t	second_fork;
 
 	fork = philo->e->mutexes.fork;
-	if (philo->id % 2 == 0)
+	if (philo->id == 1)
 	{
 		first_fork = get_right_fork(philo);
 		second_fork = get_left_fork(philo);
