@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/30 17:48:46 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/30 18:11:37 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 	const size_t	id = philo->id;
 	const size_t	time_to_eat = philo->e->config.time_to_eat;
 	size_t			p;
-	size_t			ans;
 
 	if (num_philo % 2 == 1)
 	{
@@ -39,8 +38,7 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 			p = 2 * num_philo - id;
 		else
 			p = num_philo - id;
-		ans = (size_t)(p * time_to_eat / (num_philo - 1));
-		return (ans);
+		return ((size_t)(p * time_to_eat / (num_philo - 1)));
 	}
 	else
 	{
