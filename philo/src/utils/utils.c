@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/27 20:47:39 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/30 17:39:28 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_result	print_msg(t_philo *philo, int STATE)
 	int			diff_time;
 
 	gettimeofday(&now, NULL);
-	diff_time = difftimeval_ms(philo->start_at, now);
+	diff_time = difftimeval_ms(philo->e->start_at, now);
 	if (STATE == HAS_FORK)
 		printf("%d %zu has taken a fork\n", diff_time, philo->id);
 	else if (STATE == EATING)

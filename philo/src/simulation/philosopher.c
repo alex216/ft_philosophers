@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/28 16:43:56 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/30 17:48:46 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 	const size_t	id = philo->id;
 	const size_t	time_to_eat = philo->e->config.time_to_eat;
 	size_t			p;
+	size_t			ans;
 
 	if (num_philo % 2 == 1)
 	{
@@ -38,7 +39,8 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 			p = 2 * num_philo - id;
 		else
 			p = num_philo - id;
-		return ((size_t)(p * time_to_eat / (num_philo - 1)));
+		ans = (size_t)(p * time_to_eat / (num_philo - 1));
+		return (ans);
 	}
 	else
 	{
@@ -80,9 +82,8 @@ void	*philosopher(void *void_ptr)
 	t_philo	*philo;
 
 	philo = void_ptr;
-	gettimeofday(&philo->start_at, NULL);
 	set_fork(philo);
-	safe_update_last_meal(philo, &philo->start_at);
+	precise_msleep_until(philo->e->start_at);
 	_think(philo);
 	if (sleep_with_check(philo, _ret_init_wait_time(philo)) == FAILURE)
 		return (NULL);

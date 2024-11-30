@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:55:32 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 00:36:29 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/30 17:28:29 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ struct timeval	timeval_add_ms(struct timeval t, int msec)
 	return (t);
 }
 
-static void	precise_msleep_until(struct timeval end)
+void	precise_msleep_until(struct timeval end)
 {
 	struct timeval	now;
 	suseconds_t		diff;

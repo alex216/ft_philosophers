@@ -6,13 +6,14 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 15:46:12 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/01 12:13:19 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "channel.h"
 #include "init.h"
 
+// t_timeval can be shallow copied because it is a struct of two longs
 void	_init_philo(t_env *e)
 {
 	size_t	i;
@@ -49,6 +50,7 @@ static t_result	_init_channels(t_env *e)
 		e->mutexes.last_meal[i] = construct_channel(sizeof(t_timeval));
 		if (e->mutexes.last_meal[i] == NULL)
 			return (FAILURE);
+		send_channel(e->mutexes.last_meal[i], &e->start_at);
 		i++;
 	}
 	return (SUCCESS);
@@ -61,6 +63,11 @@ static void	_init_manager(t_env *e)
 
 t_result	init(t_env *e)
 {
+	t_timeval	start_at;
+	const int	time_to_create_thread = 20;
+
+	gettimeofday(&start_at, NULL);
+	e->start_at = timeval_add_ms(start_at, time_to_create_thread);
 	_init_philo(e);
 	_init_manager(e);
 	if (init_mutexes(e) == FAILURE)

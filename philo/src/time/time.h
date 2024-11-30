@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:50:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/23 00:36:31 by yliu             ###   ########.fr       */
+/*   Updated: 2024/11/30 16:57:58 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 long			difftimeval_ms(struct timeval t1, struct timeval t2);
 suseconds_t		difftimeval_us(struct timeval t1, struct timeval t2);
 struct timeval	timeval_add_ms(struct timeval t, int msec);
-static void		precise_msleep_until(struct timeval end);
+void			precise_msleep_until(struct timeval end);
 void			precise_msleep(size_t msec);
 
 #endif
