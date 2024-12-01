@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:33:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/20 17:15:01 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/01 11:43:17 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 # include <string.h>
 
 typedef struct s_channel	t_channel;
+typedef pthread_mutex_t		t_mutex;
 
 struct						s_channel
 {
 	void					*data;
 	size_t					data_size;
-	pthread_mutex_t			lock;
+	t_mutex					lock;
 };
 
 t_channel					*construct_channel(size_t data_size);

@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:08 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/30 17:38:46 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/01 11:24:07 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define MAX_PHILO 200
 
+typedef pthread_mutex_t			t_mutex;
 typedef struct timeval			t_timeval;
 
 typedef struct s_fork			t_fork;
@@ -51,7 +52,7 @@ typedef enum e_state
 
 struct							s_fork
 {
-	pthread_mutex_t				lock;
+	t_mutex						lock;
 };
 
 struct							s_philosopher

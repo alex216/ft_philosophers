@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/30 17:39:28 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/01 11:49:00 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,16 @@ t_result	print_msg(t_philo *philo, int STATE)
 	return (SUCCESS);
 }
 
-t_result	sleep_with_check(t_philo *philo, size_t time_to_sleep)
+t_result	safe_print_msg(t_mutex *m, t_philo *philo, int STATE)
 {
-	precise_msleep(time_to_sleep);
-	if (!safe_is_game_running(philo->e))
-		return (FAILURE);
-	return (SUCCESS);
+	t_result	result;
+
+	result = FAILURE;
+	pthread_mutex_lock(m);
+	if (*(bool *)philo->e->mutexes.is_running->data)
+	{
+		result = print_msg(philo, STATE);
+	}
+	pthread_mutex_unlock(m);
+	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/30 18:11:37 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/01 11:43:44 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ static t_result	_sleep(t_philo *philo)
 {
 	const size_t	time_to_sleep = philo->e->config.time_to_sleep;
 
-	print_msg(philo, SLEEPING);
-	return (sleep_with_check(philo, time_to_sleep));
+	safe_print_msg(&philo->e->mutexes.is_running->lock, philo, SLEEPING);
+	precise_msleep(time_to_sleep);
+	return (SUCCESS);
 }
 
 static void	_think(t_philo *philo)
 {
-	print_msg(philo, THINKING);
+	safe_print_msg(&philo->e->mutexes.is_running->lock, philo, THINKING);
 }
 
 static size_t	_ret_init_wait_time(t_philo *philo)
@@ -83,8 +84,7 @@ void	*philosopher(void *void_ptr)
 	set_fork(philo);
 	precise_msleep_until(philo->e->start_at);
 	_think(philo);
-	if (sleep_with_check(philo, _ret_init_wait_time(philo)) == FAILURE)
-		return (NULL);
+	precise_msleep(_ret_init_wait_time(philo));
 	while (true)
 	{
 		if (eat(philo) == FAILURE)
