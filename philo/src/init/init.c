@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/01 12:13:19 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/01 13:42:49 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@ void	_init_philo(t_env *e)
 	{
 		e->philo[i].id = i + 1;
 		e->philo[i].e = e;
+		if (i == 0)
+		{
+			e->philo[i].first_fork = i;
+			e->philo[i].second_fork = (i + 1) % e->config.num_philo;
+		}
+		else
+		{
+			e->philo[i].first_fork = (i + 1) % e->config.num_philo;
+			e->philo[i].second_fork = i;
+		}
 		i++;
 	}
 }
