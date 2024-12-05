@@ -6,13 +6,13 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 23:45:33 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/13 11:49:08 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:28:04 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftsubset.h"
 
-static int	is_space(char c)
+static int	_is_space(char c)
 {
 	while (c == '\t' || c == '\n' || c == '\v' || c == '\f' || c == '\r'
 		|| c == ' ')
@@ -29,7 +29,7 @@ int	ft_atoi(const char *str)
 	flag = 1;
 	if (str == NULL)
 		return (errno = EINVAL, 0);
-	while (is_space(*str) != '\0')
+	while (_is_space(*str) != '\0')
 		str++;
 	if (*str == '-' || *str == '+')
 	{

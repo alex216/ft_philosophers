@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/05 14:55:48 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:42:15 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 	}
 }
 
-// check if the philo has died is done,
-// after blocking action such as sleep and mutex lock
 void	*philosopher(void *void_ptr)
 {
 	t_philo	*philo;

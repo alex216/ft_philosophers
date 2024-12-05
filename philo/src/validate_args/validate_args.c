@@ -6,13 +6,13 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:04:56 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/28 11:19:53 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:29:52 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "validate_args.h"
 
-static size_t	str_to_sizet(char *string)
+static size_t	_str_to_sizet(char *string)
 {
 	int		answer;
 	int		r;
@@ -28,33 +28,35 @@ static size_t	str_to_sizet(char *string)
 	return (errno = 0, (size_t)answer);
 }
 
-t_result	validate_args(t_env *e, int argc, char **argv)
+static t_result	_register_args(t_config *config, int argc, char **argv)
 {
-	t_config	*config;
-
-	if (argc != 5 && argc != 6)
-		return (FAILURE);
-	memset(e, 0, sizeof(t_env));
-	config = &e->config;
-	*(size_t *)&config->num_philo = str_to_sizet(argv[1]);
+	*(size_t *)&config->num_philo = _str_to_sizet(argv[1]);
 	if (errno != 0 || config->num_philo > MAX_PHILO || config->num_philo < 2)
 		return (FAILURE);
-	*(size_t *)&e->config.time_to_die = str_to_sizet(argv[2]);
+	*(size_t *)&config->time_to_die = _str_to_sizet(argv[2]);
 	if (errno != 0)
 		return (FAILURE);
-	*(size_t *)&e->config.time_to_eat = str_to_sizet(argv[3]);
+	*(size_t *)&config->time_to_eat = _str_to_sizet(argv[3]);
 	if (errno != 0)
 		return (FAILURE);
-	*(size_t *)&e->config.time_to_sleep = str_to_sizet(argv[4]);
+	*(size_t *)&config->time_to_sleep = _str_to_sizet(argv[4]);
 	if (errno != 0)
 		return (FAILURE);
 	if (argc == 6)
 	{
-		*(size_t *)&e->config.min_eat_count = str_to_sizet(argv[5]);
+		*(size_t *)&config->min_eat_count = _str_to_sizet(argv[5]);
 		if (errno != 0)
 			return (FAILURE);
 	}
 	else
-		*(size_t *)&e->config.min_eat_count = 0;
+		*(size_t *)&config->min_eat_count = 0;
 	return (SUCCESS);
+}
+
+t_result	validate_args(t_env *e, int argc, char **argv)
+{
+	if (argc != 5 && argc != 6)
+		return (FAILURE);
+	memset(e, 0, sizeof(t_env));
+	return (_register_args(&e->config, argc, argv));
 }

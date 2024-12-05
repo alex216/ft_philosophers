@@ -6,31 +6,14 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/05 11:30:30 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:27:53 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "channel.h"
 #include "init.h"
 
-double	ft_ceil(double x)
-{
-	double	truncated;
-
-	truncated = (double)(long)x;
-	if (x > truncated)
-		return (truncated + 1.0);
-	return (truncated);
-}
-
-unsigned int	ft_max(unsigned int a, unsigned int b)
-{
-	if (a < b)
-		return (b);
-	return (a);
-}
-
-static size_t	calc_extra_sleep_time(t_env *e)
+static size_t	_calc_extra_sleep_time(t_env *e)
 {
 	const unsigned int	n = e->config.num_philo;
 	const size_t		time_to_eat = e->config.time_to_eat;
@@ -44,7 +27,7 @@ static size_t	calc_extra_sleep_time(t_env *e)
 }
 
 // t_timeval can be shallow copied because it is a struct of two longs
-void	_init_philo(t_env *e)
+static void	_init_philo(t_env *e)
 {
 	size_t	i;
 
@@ -52,7 +35,7 @@ void	_init_philo(t_env *e)
 	while (i < e->config.num_philo)
 	{
 		e->philo[i].id = i + 1;
-		e->philo[i].extra_sleep_time = calc_extra_sleep_time(e);
+		e->philo[i].extra_sleep_time = _calc_extra_sleep_time(e);
 		if (i == 0)
 		{
 			e->philo[i].first_fork = i;

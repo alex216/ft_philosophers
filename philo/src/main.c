@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:00 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/01 13:36:23 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:42:54 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,10 @@ static void	_cleanup(t_env *e)
 	}
 }
 
-// philo thread
-// check is_running before every action
-//
-// manager thread
-// check all philo's death and satisfied
-// if one is dead by last_eat -> set is_running to false
-
 int	main(int argc, char **argv)
 {
 	t_env	e;
 
-	// TODO: 2 201 100 100 should not die.
-	// TODO: 3 301 100 100 died.
 	if (validate_args(&e, argc, argv) == FAILURE)
 		return (EXIT_FAILURE);
 	if (init(&e) == FAILURE)

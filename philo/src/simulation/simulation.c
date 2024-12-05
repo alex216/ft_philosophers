@@ -6,13 +6,13 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:06 by yliu              #+#    #+#             */
-/*   Updated: 2024/11/27 21:35:17 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:25:39 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 
-static t_result	_create_threads(t_env *e)
+static t_result	_create_philo_threads(t_env *e)
 {
 	size_t			i;
 	const size_t	num_philo = e->config.num_philo;
@@ -32,6 +32,14 @@ static t_result	_create_threads(t_env *e)
 		}
 		i++;
 	}
+	return (SUCCESS);
+}
+
+static t_result	_create_manager_threads(t_env *e)
+{
+	size_t	i;
+
+	i = 0;
 	if (pthread_create(&e->manager.thread, NULL, manager, &e->manager) != 0)
 	{
 		while (i > 0)
@@ -62,7 +70,7 @@ static t_result	_join_threads(t_env *e)
 
 t_result	start_simulation(t_env *e)
 {
-	return (_create_threads(e));
+	return (_create_philo_threads(e) || _create_manager_threads(e));
 }
 
 t_result	wait_simulation_end(t_env *e)

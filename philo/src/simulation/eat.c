@@ -6,13 +6,13 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:48:31 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/01 11:41:39 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 17:30:09 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation.h"
 
-static void	safe_update_eat_count(t_philo *philo)
+static void	_safe_update_eat_count(t_philo *philo)
 {
 	size_t			eat_count;
 	const size_t	id = philo->id;
@@ -22,7 +22,7 @@ static void	safe_update_eat_count(t_philo *philo)
 	send_channel(philo->e->mutexes.eat_count[id - 1], &eat_count);
 }
 
-static t_result	unsafe_eat(void *void_ptr)
+static t_result	_unsafe_eat(void *void_ptr)
 {
 	t_philo		*philo;
 	t_timeval	tp;
@@ -33,12 +33,12 @@ static t_result	unsafe_eat(void *void_ptr)
 	safe_print_msg(&philo->e->mutexes.is_running->lock, philo, EATING);
 	gettimeofday(&tp, NULL);
 	safe_update_last_meal(philo, &tp);
-	safe_update_eat_count(philo);
+	_safe_update_eat_count(philo);
 	precise_msleep(time_to_eat);
 	return (SUCCESS);
 }
 
-static t_result	safe_execute_with_two_mutexes(t_unsafe_func f, t_mutex *m1,
+static t_result	_safe_execute_with_two_mutexes(t_unsafe_func f, t_mutex *m1,
 		t_mutex *m2, void *param)
 {
 	t_result	result;
@@ -70,6 +70,6 @@ t_result	eat(t_philo *philo)
 	const size_t	second_fork = philo->second_fork;
 
 	fork = philo->e->mutexes.fork;
-	return (safe_execute_with_two_mutexes(unsafe_eat, &fork[first_fork].lock,
+	return (_safe_execute_with_two_mutexes(_unsafe_eat, &fork[first_fork].lock,
 			&fork[second_fork].lock, philo));
 }
