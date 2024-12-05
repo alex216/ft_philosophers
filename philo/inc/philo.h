@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:08 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/01 11:24:07 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 11:23:15 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ struct							s_philosopher
 {
 	pthread_t					thread;
 	size_t						id;
+	size_t						extra_sleep_time;
 	size_t						first_fork;
 	size_t						second_fork;
 
