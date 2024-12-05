@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:04:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/05 11:39:17 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/05 14:55:48 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static t_result	_sleep(t_philo *philo)
 static void	_think(t_philo *philo)
 {
 	safe_print_msg(&philo->e->mutexes.is_running->lock, philo, THINKING);
-	precise_msleep(philo->extra_sleep_time);
 }
 
 static size_t	_ret_init_wait_time(t_philo *philo)
@@ -70,6 +69,7 @@ void	*philosopher(void *void_ptr)
 		if (_sleep(philo) == FAILURE)
 			break ;
 		_think(philo);
+		precise_msleep(philo->extra_sleep_time);
 	}
 	return (NULL);
 }
