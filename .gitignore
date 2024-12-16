@@ -2,5 +2,6 @@
 !philo_bonus
 philo/philo
 philo/test.sh
+philo_bonus/philo_bonus
 compile_flags.txt
 .vscode
