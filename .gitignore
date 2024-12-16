@@ -1,3 +1,6 @@
+!philo
+!philo_bonus
+philo/philo
+philo/test.sh
 compile_flags.txt
 .vscode
-philo
