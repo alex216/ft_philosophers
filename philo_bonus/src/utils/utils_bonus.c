@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 22:10:30 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/18 18:01:01 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ t_result	safe_print_msg(t_channel *channel, t_philo *philo, int STATE)
 	t_result	result;
 
 	result = FAILURE;
-	sem_wait(channel->lock);
+	if (sem_wait(channel->lock) < 0)
+	{
+		printf("print wait failed: %s, name: %s\n", strerror(errno),
+			channel->name);
+		return (FAILURE);
+	}
 	if (*(bool *)philo->e->semaphores.is_running->data)
 	{
 		result = print_msg(philo, STATE);

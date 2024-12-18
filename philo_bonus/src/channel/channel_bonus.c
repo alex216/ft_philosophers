@@ -62,14 +62,24 @@ void	close_channel(t_channel *channel)
 
 void	send_channel(t_channel *channel, void *data)
 {
-	sem_wait(channel->lock);
+	if (sem_wait(channel->lock) < 0)
+	{
+		printf("send wait failed: %s, name: %s\n", strerror(errno),
+			channel->name);
+		return ;
+	}
 	__builtin_memcpy(channel->data, data, channel->data_size);
 	sem_post(channel->lock);
 }
 
 void	receive_channel(t_channel *channel, void *data)
 {
-	sem_wait(channel->lock);
+	if (sem_wait(channel->lock) < 0)
+	{
+		printf("recv wait failed: %s, name: %s\n", strerror(errno),
+			channel->name);
+		return ;
+	}
 	__builtin_memcpy(data, channel->data, channel->data_size);
 	sem_post(channel->lock);
 }
