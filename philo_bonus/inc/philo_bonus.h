@@ -52,7 +52,7 @@ typedef enum e_state
 
 struct							s_philosopher
 {
-	pthread_t					thread;
+	pid_t						pid;
 	size_t						id;
 
 	t_env						*e;
@@ -60,7 +60,7 @@ struct							s_philosopher
 
 struct							s_manager
 {
-	pthread_t					thread;
+	pid_t						pid;
 
 	t_env						*e;
 };

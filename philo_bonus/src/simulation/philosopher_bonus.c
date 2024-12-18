@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:24:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 20:12:25 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/18 18:41:24 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 	}
 }
 
-void	*philosopher(void *void_ptr)
+int	philosopher(void *void_ptr)
 {
 	t_philo	*philo;
 
@@ -69,5 +69,5 @@ void	*philosopher(void *void_ptr)
 		_think(philo);
 		// precise_msleep(philo->extra_sleep_time);
 	}
-	return (NULL);
+	return (0);
 }

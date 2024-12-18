@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:01:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 20:10:20 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/18 18:42:57 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # include "semaphores_bonus.h"
 # include "time_bonus.h"
 # include "utils_bonus.h"
+# include <signal.h>
 
 t_result	start_simulation(t_env *e);
 t_result	wait_simulation_end(t_env *e);
 
-void		*manager(void *void_ptr);
-void		*philosopher(void *void_ptr);
+int			manager(void *void_ptr);
+int			philosopher(void *void_ptr);
 t_result	eat(t_philo *philo);
 
 #endif

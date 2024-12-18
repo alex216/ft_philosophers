@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 20:13:21 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/18 18:41:34 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_result	_roll_call(t_manager *manager, bool *false_bool)
 	return (SUCCESS);
 }
 
-void	*manager(void *void_ptr)
+int	manager(void *void_ptr)
 {
 	t_manager	*manager;
 	bool		false_bool;
@@ -64,8 +64,8 @@ void	*manager(void *void_ptr)
 	while (safe_is_game_running(manager->e))
 	{
 		if (_roll_call(manager, &false_bool) == FAILURE)
-			return (NULL);
+			return (0);
 		usleep(INTERVAL);
 	}
-	return (NULL);
+	return (0);
 }
