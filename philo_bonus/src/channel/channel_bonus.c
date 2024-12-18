@@ -6,27 +6,29 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/18 16:29:12 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/14 04:22:11 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/18 18:01:38 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "channel_bonus.h"
 #include <stdio.h>
 
+// if program crashes or terminated by signal, semaphore stays in the system
+// so I choose O_CREAT, instead of O_EXCL
 static t_channel	*_set_channel_contents(const char *channel_name,
 		size_t data_size, t_channel *channel)
 {
 	memset(channel->data, 0, data_size);
 	channel->data_size = data_size;
-	channel->lock = sem_open(channel_name, O_CREAT | O_EXCL, 0600, 1);
-	if (errno == 0)
+	channel->lock = sem_open(channel_name, O_CREAT, 0600, 1);
+	if (channel->lock == SEM_FAILED)
 	{
-		sem_unlink(channel_name);
-		return (channel);
+		printf("sem open failed: %s\n", strerror(errno));
+		free((char *)channel->name);
+		return (NULL);
 	}
-	printf("sem_open failed: %s\n", strerror(errno));
-	free((char *)channel->name);
-	return (NULL);
+	sem_unlink(channel_name);
+	return (channel);
 }
 
 t_channel	*open_channel(const char *channel_name, size_t data_size)
