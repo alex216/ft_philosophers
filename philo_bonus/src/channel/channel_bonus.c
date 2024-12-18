@@ -61,13 +61,13 @@ void	close_channel(t_channel *channel)
 void	send_channel(t_channel *channel, void *data)
 {
 	sem_wait(channel->lock);
-	ft_memcpy(channel->data, data, channel->data_size);
+	__builtin_memcpy(channel->data, data, channel->data_size);
 	sem_post(channel->lock);
 }
 
 void	receive_channel(t_channel *channel, void *data)
 {
 	sem_wait(channel->lock);
-	ft_memcpy(data, channel->data, channel->data_size);
+	__builtin_memcpy(data, channel->data, channel->data_size);
 	sem_post(channel->lock);
 }
