@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:24:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/18 18:41:24 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/19 00:22:05 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,11 @@ static size_t	_ret_init_wait_time(t_philo *philo)
 	const size_t	num_philo = philo->e->config.num_philo;
 	const size_t	id = philo->id;
 	const size_t	time_to_eat = philo->e->config.time_to_eat;
-	size_t			p;
+	const int		k = num_philo / 2;
 
-	if (num_philo % 2 == 1)
-	{
-		if (id % 2 == 0)
-			p = 2 * num_philo - id;
-		else
-			p = num_philo - id;
-		return ((size_t)(p * time_to_eat / (num_philo - 1)));
-	}
-	else
-	{
-		if (id % 2 == 1)
-			return (0);
-		else
-			return (time_to_eat);
-	}
+	if (k == 0)
+		return (0);
+	return (time_to_eat * (id - 1) / k);
 }
 
 int	philosopher(void *void_ptr)
