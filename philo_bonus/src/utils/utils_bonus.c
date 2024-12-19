@@ -6,13 +6,13 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/18 18:01:01 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/19 12:48:29 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils_bonus.h"
 
-t_result	print_msg(t_philo *philo, int STATE)
+t_result	unsafe_print_msg(t_philo *philo, int STATE)
 {
 	t_timeval	now;
 	int			diff_time;
@@ -47,7 +47,7 @@ t_result	safe_print_msg(t_channel *channel, t_philo *philo, int STATE)
 	}
 	if (*(bool *)philo->e->semaphores.is_running->data)
 	{
-		result = print_msg(philo, STATE);
+		result = unsafe_print_msg(philo, STATE);
 	}
 	sem_post(channel->lock);
 	return (result);
