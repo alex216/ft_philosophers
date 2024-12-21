@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:00 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 19:47:11 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 21:26:01 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ static void	_print_usage(void)
 	printf("time_to_eat time_to_sleep [min_eat_count]\n");
 }
 
+// TODO: extra sleep time (or use distrubuted algorithm)
+// TODO: crash with many philos
+// TODO: busy wait (polling)
+// TODO: waiter
 int	main(int argc, char **argv)
 {
 	t_env	e;

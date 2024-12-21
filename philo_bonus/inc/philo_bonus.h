@@ -92,6 +92,7 @@ struct							s_env
 	t_manager					manager;
 	t_config					config;
 	t_timeval					start_at;
+	unsigned int				extra_sleep_time;
 };
 
 #endif

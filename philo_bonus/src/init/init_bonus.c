@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 19:46:42 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 21:25:57 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,16 @@ static t_result	close_all_channels(t_env *e, size_t i)
 		close_channel(e->semaphores.last_meal[i]);
 	}
 	return (FAILURE);
+}
+
+static unsigned int	_calc_extra_sleep_time(t_env *env)
+{
+	const size_t	n = env->config.num_philo;
+	const size_t	k = n / 2;
+	const size_t	e = env->config.time_to_eat;
+	const size_t	s = env->config.time_to_sleep;
+
+	return (ft_max(e * n / k - (e + s), 0));
 }
 
 static t_result	init_semaphore_of_philo(t_env *e)
@@ -114,6 +124,7 @@ t_result	init(t_env *e)
 
 	gettimeofday(&start_at, NULL);
 	e->start_at = timeval_add_ms(start_at, time_to_create_procs);
+	e->extra_sleep_time = _calc_extra_sleep_time(e);
 	_init_philo(e);
 	e->manager.e = e;
 	return (_init_semaphore(e));
