@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/12/15 13:52:39 by yliu             ###   ########.fr        #
+#    Updated: 2024/12/21 21:27:58 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ INCS			:=	$(INCS_DIR)/philo_bonus.h							\
 					$(SRCS_DIR)/time/time_bonus.h						\
 					$(SRCS_DIR)/utils/utils_bonus.h						\
 
-SRCS 			:=	$(SRCS_DIR)/main.c									\
+SRCS 			:=	$(SRCS_DIR)/main_bonus.c									\
 					$(SRCS_DIR)/libftsubset/ft_strlen_bonus.c			\
 					$(SRCS_DIR)/libftsubset/ft_atoi_bonus.c				\
 					$(SRCS_DIR)/libftsubset/ft_itoa_bonus.c				\
