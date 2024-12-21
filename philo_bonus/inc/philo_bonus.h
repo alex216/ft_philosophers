@@ -79,6 +79,7 @@ struct							s_config
 struct							s_semaphores
 {
 	sem_t						*forks;
+	sem_t						*waiter;
 	t_sembool					*is_running;
 	t_channel					*eat_count[MAX_PHILO];
 	t_channel					*last_meal[MAX_PHILO];

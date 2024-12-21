@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 16:44:15 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 19:46:42 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,17 @@ static t_result	init_semaphore_of_philo(t_env *e)
 static t_result	_init_semaphore(t_env *e)
 {
 	// unhappy path not considered yet.
+	e->semaphores.waiter = malloc(sizeof(sem_t));
+	if (e->semaphores.waiter == NULL)
+		return (FAILURE);
+	e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600, e->config.num_philo
+			- 1);
+	if (e->semaphores.waiter == SEM_FAILED)
+	{
+		printf("sem_open failed: %s\n", strerror(errno));
+		return (FAILURE);
+	}
+	unlink("waiter");
 	e->semaphores.is_running = malloc(sizeof(t_sembool));
 	if (e->semaphores.is_running == NULL)
 		return (FAILURE);

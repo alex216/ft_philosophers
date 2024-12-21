@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:05 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 17:15:57 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 19:44:56 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,17 @@ static t_result	_unsafe_eat(void *void_ptr)
 t_result	eat(t_philo *philo)
 {
 	sem_t	*fork;
+	sem_t	*waiter;
 
 	// fork resource deadlock not considered yet
+	waiter = philo->e->semaphores.waiter;
 	fork = philo->e->semaphores.forks;
+	sem_wait(waiter);
 	sem_wait(fork);
 	safe_print_msg(philo, HAS_FORK);
 	sem_wait(fork);
 	safe_print_msg(philo, HAS_FORK);
+	sem_post(waiter);
 	_unsafe_eat(philo);
 	sem_post(fork);
 	sem_post(fork);
