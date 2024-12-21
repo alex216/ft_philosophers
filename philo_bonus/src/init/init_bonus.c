@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/19 12:46:48 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 16:44:15 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,19 @@ static t_result	init_semaphore_of_philo(t_env *e)
 
 static t_result	_init_semaphore(t_env *e)
 {
-	bool	data;
-
-	e->semaphores.is_running = open_channel("is_running", sizeof(bool));
+	// unhappy path not considered yet.
+	e->semaphores.is_running = malloc(sizeof(t_sembool));
 	if (e->semaphores.is_running == NULL)
 		return (FAILURE);
-	data = true;
-	send_channel(e->semaphores.is_running, &data);
+	e->semaphores.is_running = sem_open("is_running_flag", O_CREAT, 0600, 1);
+	if (e->semaphores.is_running == SEM_FAILED)
+	{
+		printf("sem_open failed: %s\n", strerror(errno));
+		return (FAILURE);
+	}
+	sem_unlink("is_running_flag");
 	if (init_semaphore_of_philo(e) == FAILURE)
 	{
-		close_channel(e->semaphores.is_running);
 		return (FAILURE);
 	}
 	return (SUCCESS);
@@ -96,7 +99,7 @@ static t_result	_init_semaphore(t_env *e)
 t_result	init(t_env *e)
 {
 	t_timeval	start_at;
-	const int	time_to_create_procs = 20;
+	const int	time_to_create_procs = 500 * e->config.num_philo;
 
 	gettimeofday(&start_at, NULL);
 	e->start_at = timeval_add_ms(start_at, time_to_create_procs);

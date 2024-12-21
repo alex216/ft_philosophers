@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:41 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 11:34:33 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 16:17:19 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,4 @@ t_result			init_semaphores(t_env *e);
 void				destroy_semaphores(t_env *e);
 
 bool				safe_is_philo_satisfied(t_philo *philo);
-bool				safe_is_game_running(t_env *e);
-void				safe_update_last_meal(t_philo *philo, t_timeval *tp);
 #endif

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/16 03:52:59 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/19 12:48:29 by yliu             ###   ########.fr       */
+/*   Created: 2024/12/21 16:18:22 by yliu              #+#    #+#             */
+/*   Updated: 2024/12/21 16:39:37 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,45 +27,19 @@ static bool	_safe_is_philo_dead(t_philo *philo)
 	return (difftimeval_ms(last_meal, now) >= (int)time_to_die);
 }
 
-static t_result	_roll_call(t_manager *manager, bool *false_bool)
+void	*manager_func(void *void_ptr)
 {
-	size_t	i;
-	size_t	satisfied_philo;
-	size_t	num_philo;
+	t_philo	*philo;
 
-	num_philo = manager->e->config.num_philo;
-	i = 0;
-	satisfied_philo = 0;
-	while (i < num_philo)
+	philo = (t_philo *)void_ptr;
+	while (!safe_is_philo_satisfied(philo))
 	{
-		if (safe_is_philo_satisfied(&manager->e->philo[i]))
-			satisfied_philo++;
-		else if (_safe_is_philo_dead(&manager->e->philo[i]))
+		if (_safe_is_philo_dead(philo))
 		{
-			send_channel(manager->e->semaphores.is_running, false_bool);
-			unsafe_print_msg(&manager->e->philo[i], DIED);
-			return (FAILURE);
+			safe_print_msg(philo, DIED);
+			exit(PHILO_DIED);
 		}
-		i++;
-	}
-	if (satisfied_philo == num_philo)
-		send_channel(manager->e->semaphores.is_running, false_bool);
-	return (SUCCESS);
-}
-
-int	manager(void *void_ptr)
-{
-	t_manager	*manager;
-	bool		false_bool;
-
-	false_bool = false;
-	manager = (t_manager *)void_ptr;
-	precise_msleep_until(manager->e->start_at);
-	while (safe_is_game_running(manager->e))
-	{
-		if (_roll_call(manager, &false_bool) == FAILURE)
-			return (0);
 		usleep(INTERVAL);
 	}
-	return (0);
+	return (NULL);
 }

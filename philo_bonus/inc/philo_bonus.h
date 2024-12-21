@@ -24,6 +24,7 @@
 # define MAX_PHILO 200
 
 typedef struct timeval			t_timeval;
+typedef sem_t					t_sembool;
 
 typedef struct s_last_meal		t_last_meal;
 typedef struct s_eat_count		t_eat_count;
@@ -53,6 +54,7 @@ typedef enum e_state
 struct							s_philosopher
 {
 	pid_t						pid;
+	pthread_t					thread_id;
 	size_t						id;
 
 	t_env						*e;
@@ -60,7 +62,7 @@ struct							s_philosopher
 
 struct							s_manager
 {
-	pid_t						pid;
+	pthread_t					thread_id;
 
 	t_env						*e;
 };
@@ -77,7 +79,7 @@ struct							s_config
 struct							s_semaphores
 {
 	sem_t						*forks;
-	t_channel					*is_running;
+	t_sembool					*is_running;
 	t_channel					*eat_count[MAX_PHILO];
 	t_channel					*last_meal[MAX_PHILO];
 };

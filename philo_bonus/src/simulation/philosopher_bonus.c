@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:24:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/19 00:22:05 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 17:14:08 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,27 @@ static t_result	_sleep(t_philo *philo)
 {
 	const size_t	time_to_sleep = philo->e->config.time_to_sleep;
 
-	safe_print_msg(philo->e->semaphores.is_running, philo, SLEEPING);
+	safe_print_msg(philo, SLEEPING);
 	precise_msleep(time_to_sleep);
 	return (SUCCESS);
 }
 
-static void	_think(t_philo *philo)
+static t_result	_think(t_philo *philo)
 {
-	safe_print_msg(philo->e->semaphores.is_running, philo, THINKING);
+	return (safe_print_msg(philo, THINKING));
 }
 
-static size_t	_ret_init_wait_time(t_philo *philo)
+static int	_ret_init_wait_time(t_philo *philo)
 {
 	const size_t	num_philo = philo->e->config.num_philo;
 	const size_t	id = philo->id;
 	const size_t	time_to_eat = philo->e->config.time_to_eat;
 	const int		k = num_philo / 2;
 
-	if (k == 0)
-		return (0);
 	return (time_to_eat * (id - 1) / k);
 }
 
-int	philosopher(void *void_ptr)
+void	*philosopher_func(void *void_ptr)
 {
 	t_philo	*philo;
 
@@ -48,14 +46,12 @@ int	philosopher(void *void_ptr)
 	precise_msleep(_ret_init_wait_time(philo));
 	while (true)
 	{
-		if (eat(philo) == FAILURE)
-			break ;
+		eat(philo);
 		if (safe_is_philo_satisfied(philo))
 			break ;
-		if (_sleep(philo) == FAILURE)
-			break ;
+		_sleep(philo);
 		_think(philo);
 		// precise_msleep(philo->extra_sleep_time);
 	}
-	return (0);
+	return (NULL);
 }

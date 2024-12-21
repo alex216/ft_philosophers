@@ -6,11 +6,29 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:03:50 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/18 18:42:32 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 16:56:44 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "simulation_bonus.h"
+#define ANY_CHILD_PROCESS -1
+#define ALL_CHILD_PROCESS 0
+
+static t_result	_philosopher_child_proc(t_philo *philo)
+{
+	t_manager	*manager;
+
+	manager = &philo->e->manager;
+	if (pthread_create(&philo->thread_id, NULL, philosopher_func, philo) != 0)
+		return (FAILURE);
+	if (pthread_create(&manager->thread_id, NULL, manager_func, philo) != 0)
+		return (FAILURE);
+	if (pthread_join(philo->thread_id, NULL) != 0)
+		return (FAILURE);
+	if (pthread_join(philo->e->manager.thread_id, NULL) != 0)
+		return (FAILURE);
+	return (SUCCESS);
+}
 
 static t_result	_create_philo_procs(t_env *e)
 {
@@ -24,15 +42,11 @@ static t_result	_create_philo_procs(t_env *e)
 		pid = fork();
 		if (pid < 0)
 		{
-			while (i > 0)
-			{
-				kill(e->philo[--i].pid, SIGTERM);
-				waitpid(e->philo[i].pid, NULL, 0);
-			}
+			kill(ALL_CHILD_PROCESS, SIGTERM);
 			return (FAILURE);
 		}
 		else if (pid == 0)
-			exit(philosopher(&e->philo[i]));
+			exit(_philosopher_child_proc(&e->philo[i]));
 		else
 			e->philo[i].pid = pid;
 		i++;
@@ -40,49 +54,43 @@ static t_result	_create_philo_procs(t_env *e)
 	return (SUCCESS);
 }
 
-static t_result	_create_manager_proc(t_env *e)
+// if use kill(ALL_CHILD_PROCESS, SIGTERM)
+// msg will appear so kill each proc one by one.
+static void	kill_all_child_processes(t_env *e)
 {
 	size_t	i;
-	pid_t	pid;
 
-	pid = fork();
-	if (pid < 0)
+	i = 0;
+	while (i < e->config.num_philo)
 	{
-		i = 0;
-		while (i > 0)
-		{
-			kill(e->philo[--i].pid, SIGTERM);
-			waitpid(e->philo[i].pid, NULL, 0);
-		}
-		return (FAILURE);
+		kill(e->philo[i].pid, SIGTERM);
+		i++;
 	}
-	else if (pid == 0)
-		exit(manager(&e->manager));
-	else
-		e->manager.pid = pid;
-	return (SUCCESS);
 }
 
 static t_result	_wait_pocs(t_env *e)
 {
-	size_t			i;
-	const size_t	num_philo = e->config.num_philo;
+	pid_t	wpid;
+	int		exit_status;
 
-	i = 0;
-	while (i < num_philo)
+	while (true)
 	{
-		if (waitpid(e->philo[i].pid, NULL, 0) < 0)
+		wpid = waitpid(ANY_CHILD_PROCESS, &exit_status, 0);
+		if (wpid == -1)
+		{
+			if (errno == ECHILD)
+				break ;
 			return (FAILURE);
-		i++;
+		}
+		if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status) == PHILO_DIED)
+			kill_all_child_processes(e);
 	}
-	if (waitpid(e->manager.pid, NULL, 0) < 0)
-		return (FAILURE);
 	return (SUCCESS);
 }
 
 t_result	start_simulation(t_env *e)
 {
-	return (_create_philo_procs(e) || _create_manager_proc(e));
+	return (_create_philo_procs(e));
 }
 
 t_result	wait_simulation_end(t_env *e)

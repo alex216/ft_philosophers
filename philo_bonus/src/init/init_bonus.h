@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:47:07 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 20:01:08 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/19 14:38:40 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "philo_bonus.h"
 # include "time_bonus.h"
+# include <stdio.h>
 # include <stdlib.h>
 
 t_result	init(t_env *e);

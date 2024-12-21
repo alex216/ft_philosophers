@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/19 12:48:29 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 17:17:42 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,13 @@ t_result	unsafe_print_msg(t_philo *philo, int STATE)
 	return (SUCCESS);
 }
 
-t_result	safe_print_msg(t_channel *channel, t_philo *philo, int STATE)
+// if STATE is DIED, it will not release the is_running semaphore
+t_result	safe_print_msg(t_philo *philo, int STATE)
 {
-	t_result	result;
-
-	result = FAILURE;
-	if (sem_wait(channel->lock) < 0)
-	{
-		printf("print wait failed: %s, name: %s\n", strerror(errno),
-			channel->name);
+	sem_wait(philo->e->semaphores.is_running);
+	unsafe_print_msg(philo, STATE);
+	if (STATE == DIED)
 		return (FAILURE);
-	}
-	if (*(bool *)philo->e->semaphores.is_running->data)
-	{
-		result = unsafe_print_msg(philo, STATE);
-	}
-	sem_post(channel->lock);
-	return (result);
+	sem_post(philo->e->semaphores.is_running);
+	return (SUCCESS);
 }

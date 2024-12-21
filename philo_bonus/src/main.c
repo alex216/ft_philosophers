@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:00 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/13 23:14:19 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 16:44:30 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	_cleanup(t_env *e)
 	const size_t	num_of_philo = e->config.num_philo;
 
 	destroy_semaphores(e);
-	close_channel(e->semaphores.is_running);
+	sem_close(e->semaphores.is_running);
 	i = 0;
 	while (i < num_of_philo)
 	{

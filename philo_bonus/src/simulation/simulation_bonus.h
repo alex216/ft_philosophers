@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:01:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/18 18:42:57 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 15:12:46 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,13 @@
 # include "utils_bonus.h"
 # include <signal.h>
 
+# define PHILO_DIED SIGUSR1
+
 t_result	start_simulation(t_env *e);
 t_result	wait_simulation_end(t_env *e);
 
-int			manager(void *void_ptr);
-int			philosopher(void *void_ptr);
+void		*manager_func(void *void_ptr);
+void		*philosopher_func(void *void_ptr);
 t_result	eat(t_philo *philo);
 
 #endif
