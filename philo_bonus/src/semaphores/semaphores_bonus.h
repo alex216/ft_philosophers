@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:41 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 16:17:19 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/21 17:40:48 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
+# include <fcntl.h>
 
 typedef t_result	(*t_unsafe_func)(void *);
 
