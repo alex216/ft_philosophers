@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:41 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 17:40:48 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 10:26:18 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 # include "philo_bonus.h"
 # include "utils_bonus.h"
+# include <fcntl.h>
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdio.h>
-# include <fcntl.h>
+# include <sys/errno.h>
 
 typedef t_result	(*t_unsafe_func)(void *);
 

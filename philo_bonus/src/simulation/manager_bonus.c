@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:18:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 16:39:37 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 10:22:42 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 
 static bool	_safe_is_philo_dead(t_philo *philo)
 {
-	const size_t	id = philo->id;
 	const size_t	time_to_die = philo->e->config.time_to_die;
 	t_timeval		last_meal;
 	t_timeval		now;
 
-	receive_channel(philo->e->semaphores.last_meal[id - 1], &last_meal);
+	sem_wait(philo->lock);
+	last_meal = philo->last_meal;
+	sem_post(philo->lock);
 	gettimeofday(&now, NULL);
 	return (difftimeval_ms(last_meal, now) >= (int)time_to_die);
 }

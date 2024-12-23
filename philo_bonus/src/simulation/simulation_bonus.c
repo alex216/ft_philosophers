@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:03:50 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 16:56:44 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 10:21:43 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,13 @@
 
 static t_result	_philosopher_child_proc(t_philo *philo)
 {
-	t_manager	*manager;
-
-	manager = &philo->e->manager;
-	if (pthread_create(&philo->thread_id, NULL, philosopher_func, philo) != 0)
+	if (pthread_create(&philo->philo_tid, NULL, philosopher_func, philo) != 0)
 		return (FAILURE);
-	if (pthread_create(&manager->thread_id, NULL, manager_func, philo) != 0)
+	if (pthread_create(&philo->manager_tid, NULL, manager_func, philo) != 0)
 		return (FAILURE);
-	if (pthread_join(philo->thread_id, NULL) != 0)
+	if (pthread_join(philo->philo_tid, NULL) != 0)
 		return (FAILURE);
-	if (pthread_join(philo->e->manager.thread_id, NULL) != 0)
+	if (pthread_join(philo->philo_tid, NULL) != 0)
 		return (FAILURE);
 	return (SUCCESS);
 }

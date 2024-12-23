@@ -14,11 +14,11 @@
 #ifndef PHILO_BONUS_H
 # define PHILO_BONUS_H
 
-# include "channel_bonus.h"
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
 # include <stddef.h>
+# include <string.h>
 # include <sys/time.h>
 
 # define MAX_PHILO 200
@@ -54,15 +54,14 @@ typedef enum e_state
 struct							s_philosopher
 {
 	pid_t						pid;
-	pthread_t					thread_id;
+	pthread_t					philo_tid;
+	pthread_t					manager_tid;
+
 	size_t						id;
 
-	t_env						*e;
-};
-
-struct							s_manager
-{
-	pthread_t					thread_id;
+	size_t						eat_count;
+	t_timeval					last_meal;
+	sem_t						*lock;
 
 	t_env						*e;
 };
@@ -81,15 +80,12 @@ struct							s_semaphores
 	sem_t						*forks;
 	sem_t						*waiter;
 	t_sembool					*is_running;
-	t_channel					*eat_count[MAX_PHILO];
-	t_channel					*last_meal[MAX_PHILO];
 };
 
 struct							s_env
 {
 	t_philo						philo[MAX_PHILO];
 	t_semaphores				semaphores;
-	t_manager					manager;
 	t_config					config;
 	t_timeval					start_at;
 	unsigned int				extra_sleep_time;

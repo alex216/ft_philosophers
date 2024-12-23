@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:05 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 15:59:19 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 16:44:52 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,16 @@
 
 static void	_safe_update_eat_count(t_philo *philo)
 {
-	size_t			eat_count;
-	const size_t	id = philo->id;
-
-	receive_channel(philo->e->semaphores.eat_count[id - 1], &eat_count);
-	eat_count++;
-	send_channel(philo->e->semaphores.eat_count[id - 1], &eat_count);
+	sem_wait(philo->lock);
+	philo->eat_count++;
+	sem_post(philo->lock);
 }
 
 static void	_safe_update_last_meal(t_philo *philo, t_timeval *tp)
 {
-	send_channel(philo->e->semaphores.last_meal[philo->id - 1], tp);
+	sem_wait(philo->lock);
+	philo->last_meal = *tp;
+	sem_post(philo->lock);
 }
 
 static t_result	_unsafe_eat(void *void_ptr)

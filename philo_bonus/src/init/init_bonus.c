@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 21:25:57 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 10:24:24 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,10 @@ static void	_init_philo(t_env *e)
 	{
 		e->philo[i].id = i + 1;
 		e->philo[i].e = e;
+		e->philo[i].eat_count = 0;
+		e->philo[i].last_meal = e->start_at;
 		i++;
 	}
-}
-
-static t_result	close_all_channels(t_env *e, size_t i)
-{
-	while (i > 0)
-	{
-		close_channel(e->semaphores.eat_count[--i]);
-		close_channel(e->semaphores.last_meal[i]);
-	}
-	return (FAILURE);
 }
 
 static unsigned int	_calc_extra_sleep_time(t_env *env)
@@ -49,38 +41,22 @@ static unsigned int	_calc_extra_sleep_time(t_env *env)
 static t_result	init_semaphore_of_philo(t_env *e)
 {
 	size_t			i;
-	size_t			eat_count;
 	const size_t	num_of_philo = e->config.num_philo;
 	char			*sem_name;
 	char			philo_idx[20];
 
-	eat_count = 0;
 	i = 0;
 	while (i < num_of_philo)
 	{
 		ft_itoa(i, philo_idx);
-		sem_name = ft_strjoin("eat_count_", philo_idx);
+		sem_name = ft_strjoin("philo_lock_", philo_idx);
 		if (sem_name == NULL)
-			return (close_all_channels(e, i));
-		e->semaphores.eat_count[i] = open_channel(sem_name, sizeof(size_t));
+			return (FAILURE);
+		e->philo->lock = sem_open(sem_name, O_CREAT, 0600, 1);
+		if (e->philo->lock == SEM_FAILED)
+			return (FAILURE);
+		unlink(sem_name);
 		free(sem_name);
-		if (e->semaphores.eat_count[i] == NULL)
-			return (close_all_channels(e, i));
-		send_channel(e->semaphores.eat_count[i], &eat_count);
-		sem_name = ft_strjoin("last_meal_", philo_idx);
-		if (sem_name == NULL)
-		{
-			close_channel(e->semaphores.eat_count[i]);
-			return (close_all_channels(e, i));
-		}
-		e->semaphores.last_meal[i] = open_channel(sem_name, sizeof(t_timeval));
-		free(sem_name);
-		if (e->semaphores.last_meal[i] == NULL)
-		{
-			close_channel(e->semaphores.eat_count[i]);
-			return (close_all_channels(e, i));
-		}
-		send_channel(e->semaphores.last_meal[i], &e->start_at);
 		i++;
 	}
 	return (SUCCESS);
@@ -126,6 +102,5 @@ t_result	init(t_env *e)
 	e->start_at = timeval_add_ms(start_at, time_to_create_procs);
 	e->extra_sleep_time = _calc_extra_sleep_time(e);
 	_init_philo(e);
-	e->manager.e = e;
 	return (_init_semaphore(e));
 }

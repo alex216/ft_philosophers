@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/12/21 21:27:58 by yliu             ###   ########.fr        #
+#    Updated: 2024/12/22 20:49:41 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ INCS			:=	$(INCS_DIR)/philo_bonus.h							\
 					$(SRCS_DIR)/init/init_bonus.h						\
 					$(SRCS_DIR)/simulation/simulation_bonus.h			\
 					$(SRCS_DIR)/semaphores/semaphores_bonus.h			\
-					$(SRCS_DIR)/channel/channel_bonus.h					\
 					$(SRCS_DIR)/time/time_bonus.h						\
 					$(SRCS_DIR)/utils/utils_bonus.h						\
 
@@ -71,7 +70,6 @@ SRCS 			:=	$(SRCS_DIR)/main_bonus.c									\
 					$(SRCS_DIR)/semaphores/init_bonus.c					\
 					$(SRCS_DIR)/semaphores/destroy_bonus.c				\
 					$(SRCS_DIR)/semaphores/safe_function_bonus.c		\
-					$(SRCS_DIR)/channel/channel_bonus.c					\
 					$(SRCS_DIR)/time/time_bonus.c						\
 					$(SRCS_DIR)/utils/utils_bonus.c						\
 					$(SRCS_DIR)/utils/math_bonus.c

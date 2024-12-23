@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 17:01:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 17:41:44 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 10:22:19 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include "semaphores_bonus.h"
 # include "time_bonus.h"
 # include "utils_bonus.h"
+# include <errno.h>
 # include <signal.h>
+# include <stdlib.h>
 # include <sys/wait.h>
 
 # define PHILO_DIED SIGUSR1

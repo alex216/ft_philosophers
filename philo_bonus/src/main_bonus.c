@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:00 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 21:28:13 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 10:09:21 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void	_cleanup(t_env *e)
 	i = 0;
 	while (i < num_of_philo)
 	{
-		close_channel(e->semaphores.eat_count[i]);
-		close_channel(e->semaphores.last_meal[i]);
+		sem_close(e->philo[i].lock);
 		i++;
 	}
 }
