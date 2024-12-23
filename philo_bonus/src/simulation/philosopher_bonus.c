@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:24:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 20:29:50 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 15:04:04 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	*philosopher_func(void *void_ptr)
 
 	philo = void_ptr;
 	precise_msleep_until(philo->e->start_at);
-	_think(philo);
 	precise_msleep(_ret_init_wait_time(philo));
 	while (true)
 	{
