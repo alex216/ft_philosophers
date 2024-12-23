@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 17:00:57 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 17:15:51 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_result	init_semaphore_of_philo(t_env *e)
 		e->philo->lock = sem_open(sem_name, O_CREAT, 0600, 1);
 		if (e->philo->lock == SEM_FAILED)
 			return (FAILURE);
-		unlink(sem_name);
+		sem_unlink(sem_name);
 		free(sem_name);
 		i++;
 	}
@@ -64,26 +64,17 @@ static t_result	init_semaphore_of_philo(t_env *e)
 
 static t_result	_init_semaphore(t_env *e)
 {
-	// unhappy path not considered yet.
 	e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600, e->config.num_philo
 			- 1);
 	if (e->semaphores.waiter == SEM_FAILED)
-	{
-		printf("sem_open failed: %s\n", strerror(errno));
 		return (FAILURE);
-	}
-	unlink("waiter");
+	sem_unlink("waiter");
 	e->semaphores.is_running = sem_open("is_running_flag", O_CREAT, 0600, 1);
 	if (e->semaphores.is_running == SEM_FAILED)
-	{
-		printf("sem_open failed: %s\n", strerror(errno));
 		return (FAILURE);
-	}
 	sem_unlink("is_running_flag");
 	if (init_semaphore_of_philo(e) == FAILURE)
-	{
 		return (FAILURE);
-	}
 	return (SUCCESS);
 }
 
