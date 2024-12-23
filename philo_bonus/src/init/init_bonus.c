@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 16:55:41 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 17:00:57 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static t_result	_init_semaphore(t_env *e)
 t_result	init(t_env *e)
 {
 	t_timeval	start_at;
-	const int	time_to_create_procs = 500 * e->config.num_philo;
+	const int	time_to_create_procs = 2000;
 
 	gettimeofday(&start_at, NULL);
 	e->start_at = timeval_add_ms(start_at, time_to_create_procs);
