@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 20:49:12 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 20:55:12 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static t_result	init_semaphore_of_philo(t_env *e)
 		sem_name = ft_strjoin("philo_lock_", philo_idx);
 		if (sem_name == NULL)
 			return (FAILURE);
-		e->philo->lock = sem_open(sem_name, O_CREAT, 0600, 1);
-		if (e->philo->lock == SEM_FAILED)
+		e->philo[i].lock = sem_open(sem_name, O_CREAT, 0600, 1);
+		if (e->philo[i].lock == SEM_FAILED)
 			return (FAILURE);
 		sem_unlink(sem_name);
 		free(sem_name);
