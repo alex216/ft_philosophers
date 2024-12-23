@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:03:50 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 10:21:43 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 16:58:44 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_result	_philosopher_child_proc(t_philo *philo)
 	return (SUCCESS);
 }
 
-static t_result	_create_philo_procs(t_env *e)
+t_result	start_simulation(t_env *e)
 {
 	size_t			i;
 	const size_t	num_philo = e->config.num_philo;
@@ -65,7 +65,7 @@ static void	kill_all_child_processes(t_env *e)
 	}
 }
 
-static t_result	_wait_pocs(t_env *e)
+t_result	wait_simulation_end(t_env *e)
 {
 	pid_t	wpid;
 	int		exit_status;
@@ -83,14 +83,4 @@ static t_result	_wait_pocs(t_env *e)
 			kill_all_child_processes(e);
 	}
 	return (SUCCESS);
-}
-
-t_result	start_simulation(t_env *e)
-{
-	return (_create_philo_procs(e));
-}
-
-t_result	wait_simulation_end(t_env *e)
-{
-	return (_wait_pocs(e));
 }
