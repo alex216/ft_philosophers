@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:32:05 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 19:44:56 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 15:59:19 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_result	eat(t_philo *philo)
 	sem_t	*fork;
 	sem_t	*waiter;
 
-	// fork resource deadlock not considered yet
 	waiter = philo->e->semaphores.waiter;
 	fork = philo->e->semaphores.forks;
 	sem_wait(waiter);
