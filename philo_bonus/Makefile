@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/12/22 20:49:41 by yliu             ###   ########.fr        #
+#    Updated: 2024/12/23 20:55:38 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ RM				:= rm -rf
 ECHO			:= printf
 INCLUDES		= $(addprefix -I,$(dir $(INCS)))
 MMD_MP			:= -MMD -MP
-SANITIZE		:= -g -fsanitize=integer,undefined,thread
+SANITIZE		:= -g -fsanitize=integer,undefined
 CFLAGS			:= $(WARNING) $(SANITIZE)
 
 # color and line
@@ -67,7 +67,6 @@ SRCS 			:=	$(SRCS_DIR)/main_bonus.c									\
 					$(SRCS_DIR)/simulation/philosopher_bonus.c			\
 					$(SRCS_DIR)/simulation/manager_bonus.c				\
 					$(SRCS_DIR)/simulation/eat_bonus.c					\
-					$(SRCS_DIR)/semaphores/init_bonus.c					\
 					$(SRCS_DIR)/semaphores/destroy_bonus.c				\
 					$(SRCS_DIR)/semaphores/safe_function_bonus.c		\
 					$(SRCS_DIR)/time/time_bonus.c						\
