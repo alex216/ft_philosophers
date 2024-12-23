@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 17:15:51 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 20:49:12 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,15 @@ static t_result	init_semaphore_of_philo(t_env *e)
 	return (SUCCESS);
 }
 
-static t_result	_init_semaphore(t_env *e)
+static t_result	_init_semaphores(t_env *e)
 {
+	e->semaphores.forks = sem_open("forks", O_CREAT, 0600, e->config.num_philo);
+	if (e->semaphores.forks == SEM_FAILED)
+	{
+		printf("sem_open failed: %s\n", strerror(errno));
+		return (FAILURE);
+	}
+	sem_unlink("forks");
 	e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600, e->config.num_philo
 			- 1);
 	if (e->semaphores.waiter == SEM_FAILED)
@@ -87,5 +94,5 @@ t_result	init(t_env *e)
 	e->start_at = timeval_add_ms(start_at, time_to_create_procs);
 	e->extra_sleep_time = _calc_extra_sleep_time(e);
 	_init_philo(e);
-	return (_init_semaphore(e));
+	return (_init_semaphores(e));
 }

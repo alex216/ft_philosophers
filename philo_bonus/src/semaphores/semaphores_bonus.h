@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 14:27:41 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 10:26:18 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/23 20:49:32 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 
 typedef t_result	(*t_unsafe_func)(void *);
 
-t_result			init_semaphores(t_env *e);
 void				destroy_semaphores(t_env *e);
 
 bool				safe_is_philo_satisfied(t_philo *philo);
