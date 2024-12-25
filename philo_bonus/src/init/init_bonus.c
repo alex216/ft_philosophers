@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 20:55:12 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/25 18:40:09 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,11 @@ static t_result	_init_semaphores(t_env *e)
 		return (FAILURE);
 	}
 	sem_unlink("forks");
-	e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600, e->config.num_philo
-			- 1);
+	if (e->config.num_philo == 1)
+		e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600, 1);
+	else
+		e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600,
+				e->config.num_philo - 1);
 	if (e->semaphores.waiter == SEM_FAILED)
 		return (FAILURE);
 	sem_unlink("waiter");

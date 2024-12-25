@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/12/23 20:55:38 by yliu             ###   ########.fr        #
+#    Updated: 2024/12/25 11:04:47 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,11 @@ RM				:= rm -rf
 ECHO			:= printf
 INCLUDES		= $(addprefix -I,$(dir $(INCS)))
 MMD_MP			:= -MMD -MP
+ifeq ($(UNAME), Linux)
+SANITIZE		:= -g -fsanitize=integer,undefined,thread
+else ifeq ($(UNAME), Darwin)
 SANITIZE		:= -g -fsanitize=integer,undefined
+endif
 CFLAGS			:= $(WARNING) $(SANITIZE)
 
 # color and line

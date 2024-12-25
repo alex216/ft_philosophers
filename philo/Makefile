@@ -6,7 +6,7 @@
 #    By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/13 11:05:02 by yliu              #+#    #+#              #
-#    Updated: 2024/12/05 17:17:21 by yliu             ###   ########.fr        #
+#    Updated: 2024/12/25 18:24:52 by yliu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,11 @@ WARNING			:= -Wall -Wextra -Werror -pedantic
 RM				:= rm -rf
 ECHO			:= printf
 MMD_MP			:= -MMD -MP
+ifeq ($(UNAME), Linux)
 SANITIZE		:= -g -fsanitize=integer,undefined,thread
+else ifeq ($(UNAME), Darwin)
+SANITIZE		:= -g -fsanitize=integer,undefined
+endif
 CFLAGS			:= $(WARNING) $(SANITIZE)
 
 # color and line
