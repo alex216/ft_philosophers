@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:04:56 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/05 17:29:52 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/25 18:41:09 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static size_t	_str_to_sizet(char *string)
 static t_result	_register_args(t_config *config, int argc, char **argv)
 {
 	*(size_t *)&config->num_philo = _str_to_sizet(argv[1]);
-	if (errno != 0 || config->num_philo > MAX_PHILO || config->num_philo < 2)
+	if (errno != 0 || config->num_philo > MAX_PHILO || config->num_philo < 1)
 		return (FAILURE);
 	*(size_t *)&config->time_to_die = _str_to_sizet(argv[2]);
 	if (errno != 0)
