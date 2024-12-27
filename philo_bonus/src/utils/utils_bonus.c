@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 19:20:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/21 17:17:42 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/27 21:17:22 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,18 @@ t_result	safe_print_msg(t_philo *philo, int STATE)
 		return (FAILURE);
 	sem_post(philo->e->semaphores.is_running);
 	return (SUCCESS);
+}
+
+void	cleanup(t_env *e)
+{
+	size_t			i;
+	const size_t	num_of_philo = e->config.num_philo;
+
+	destroy_semaphores(e);
+	i = 0;
+	while (i < num_of_philo)
+	{
+		sem_close(e->philo[i].lock);
+		i++;
+	}
 }

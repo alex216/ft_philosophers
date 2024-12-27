@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 18:03:46 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/19 13:12:38 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/27 21:16:04 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 t_result		unsafe_print_msg(t_philo *philo, int STATE);
 t_result		safe_print_msg(t_philo *philo, int STATE);
+void			cleanup(t_env *e);
+
 double			ft_ceil(double x);
 unsigned int	ft_max(unsigned int a, unsigned int b);
 

@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:05:00 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 16:59:57 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/27 21:16:31 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 #include "simulation_bonus.h"
 #include "validate_args_bonus.h"
 #include <stdlib.h>
-
-static void	_cleanup(t_env *e)
-{
-	size_t			i;
-	const size_t	num_of_philo = e->config.num_philo;
-
-	destroy_semaphores(e);
-	i = 0;
-	while (i < num_of_philo)
-	{
-		sem_close(e->philo[i].lock);
-		i++;
-	}
-}
 
 static void	_print_usage(void)
 {
@@ -53,6 +39,6 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (wait_simulation_end(&e) == FAILURE)
 		return (EXIT_FAILURE);
-	_cleanup(&e);
+	cleanup(&e);
 	return (EXIT_SUCCESS);
 }

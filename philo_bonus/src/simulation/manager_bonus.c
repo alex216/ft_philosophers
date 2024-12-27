@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 16:18:22 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 10:22:42 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/27 21:18:01 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	*manager_func(void *void_ptr)
 		if (_safe_is_philo_dead(philo))
 		{
 			safe_print_msg(philo, DIED);
+			cleanup(philo->e);
 			exit(PHILO_DIED);
 		}
 		usleep(INTERVAL);
