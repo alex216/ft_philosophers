@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 20:48:31 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/25 18:54:37 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/28 17:45:18 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,17 @@ static t_result	_safe_execute_with_two_mutexes(t_unsafe_func f, t_mutex *m1,
 	if (safe_is_game_running(philo->e))
 	{
 		safe_print_msg(&philo->e->mutexes.is_running->lock, philo, HAS_FORK);
-		if (philo->e->config.num_philo == 1)
-			return (FAILURE);
-		pthread_mutex_lock(m2);
-		if (safe_is_game_running(philo->e))
+		if (philo->e->config.num_philo != 1)
 		{
-			safe_print_msg(&philo->e->mutexes.is_running->lock, philo,
-				HAS_FORK);
-			result = f(philo);
+			pthread_mutex_lock(m2);
+			if (safe_is_game_running(philo->e))
+			{
+				safe_print_msg(&philo->e->mutexes.is_running->lock, philo,
+					HAS_FORK);
+				result = f(philo);
+			}
+			pthread_mutex_unlock(m2);
 		}
-		pthread_mutex_unlock(m2);
 	}
 	pthread_mutex_unlock(m1);
 	return (result);
