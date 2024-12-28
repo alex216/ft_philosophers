@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 01:24:36 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/23 15:04:04 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/28 14:36:46 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static int	_ret_init_wait_time(t_philo *philo)
 	const size_t	time_to_eat = philo->e->config.time_to_eat;
 	const int		k = num_philo / 2;
 
+	if (num_philo == 1)
+		return (0);
 	return (time_to_eat * (id - 1) / k);
 }
 
