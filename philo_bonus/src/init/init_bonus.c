@@ -6,7 +6,7 @@
 /*   By: yliu <yliu@student.42.jp>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 11:46:55 by yliu              #+#    #+#             */
-/*   Updated: 2024/12/28 14:38:04 by yliu             ###   ########.fr       */
+/*   Updated: 2024/12/28 14:46:48 by yliu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static t_result	init_semaphore_of_philo(t_env *e)
 		sem_name = ft_strjoin("philo_lock_", philo_idx);
 		if (sem_name == NULL)
 			return (FAILURE);
-		e->philo[i].lock = sem_open(sem_name, O_CREAT, 0600, 1);
+		e->philo[i].lock = sem_open(sem_name, O_CREAT | O_EXCL, 0600, 1);
 		if (e->philo[i].lock == SEM_FAILED)
 			return (FAILURE);
 		sem_unlink(sem_name);
@@ -66,7 +66,8 @@ static t_result	init_semaphore_of_philo(t_env *e)
 
 static t_result	_init_semaphores(t_env *e)
 {
-	e->semaphores.forks = sem_open("forks", O_CREAT, 0600, e->config.num_philo);
+	e->semaphores.forks = sem_open("forks", O_CREAT | O_EXCL, 0600,
+			e->config.num_philo);
 	if (e->semaphores.forks == SEM_FAILED)
 	{
 		printf("sem_open failed: %s\n", strerror(errno));
@@ -74,14 +75,15 @@ static t_result	_init_semaphores(t_env *e)
 	}
 	sem_unlink("forks");
 	if (e->config.num_philo == 1)
-		e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600, 1);
+		e->semaphores.waiter = sem_open("waiter", O_CREAT | O_EXCL, 0600, 1);
 	else
-		e->semaphores.waiter = sem_open("waiter", O_CREAT, 0600,
+		e->semaphores.waiter = sem_open("waiter", O_CREAT | O_EXCL, 0600,
 				e->config.num_philo - 1);
 	if (e->semaphores.waiter == SEM_FAILED)
 		return (FAILURE);
 	sem_unlink("waiter");
-	e->semaphores.is_running = sem_open("is_running_flag", O_CREAT, 0600, 1);
+	e->semaphores.is_running = sem_open("is_running_flag", O_CREAT | O_EXCL,
+			0600, 1);
 	if (e->semaphores.is_running == SEM_FAILED)
 		return (FAILURE);
 	sem_unlink("is_running_flag");
